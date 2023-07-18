@@ -22,27 +22,27 @@ class PostRepository
         $post->author = $row['author'];
         $post->chapo = $row['chapo'];
         $post->content = $row['content'];
-        // $post->lastUpdateDate = $row['lastUpdateDate'];
+        // $post->lastUpdateDate = $row['date'];
 
         return $post;
     }
 
-    // public function getPosts(): array
-    // {
-    //     $statement = $this->connection->getConnection()->query(
-    //         ""
-    //     );
-    //     $posts = [];
-    //     while($row = $statement->fecth()) {
-    //         $post = new Post();
-    //         $post->title = $row['title'];
-    //         $post->chapo = $row['chapo'];
-    //         $post->content = $row['content'];
-    //         $post->lastUpdateDate = $row['lastUpdateDate'];
+    public function getPosts(): array
+    {
+        $statement = $this->connection->getConnection()->query(
+            "SELECT * FROM posts"
+        );
+        $posts = [];
+        while(($row = $statement->fetch())) {
+            $post = new Post();
+            $post->title = $row['title'];
+            $post->chapo = $row['chapo'];
+            $post->content = $row['content'];
+            // $post->lastUpdateDate = $row['date'];
 
-    //         $posts[] = $post;
-    //     }
+            $posts[] = $post;
+        }
 
-    //     return $posts;
-    // }
+        return $posts;
+    }
 }

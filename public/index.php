@@ -4,6 +4,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\PostController;
+use App\Controllers\PostsController;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -22,7 +23,8 @@ try {
             }
         }
     } else {
-        // echo 'Bonjour';
+        $postsController = new PostsController($twig);
+        $postsController->execute();
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();

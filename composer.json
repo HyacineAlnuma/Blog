@@ -1,0 +1,17 @@
+{
+    "name": "hyaci/projet",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hyacine Alnuma",
+            "email": "hyacinealnuma@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.6"
+    }
+}

@@ -1,20 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    {% for post in posts %}
-        <h1>{{ post.title }}</h1>
-    {% endfor %}
-    <form action="index.php?action=addPost" method="post">
-            {# {{ form.input('name', 'Nom', name) }}
-            {{ form.input('chapo', 'Chapo', chapo) }}
-            {{ form.textarea('content', 'Contenu', content) }}
-            <button type="submit">Ajouter le post</button> #}
-            <label for="title">Titre</label>
-            <input type="text" id="title" name="title">
-            <label for="chapo">Chapo</label>
-            <input type="text" id="chapo" name="chapo">
-            <label for="content">Contenu</label>
-            <input type="text" id="content" name="content">
-            <input type="submit">
-        </form>
+	<a href="index.php">Accueil</a>
+	{% for post in posts %}
+		<h1>{{ post.title }}</h1>
+		<h2>{{ post.chapo }}</h2>
+		<p>{{ post.author }}</p>
+		<p>{{ post.content }}</p>
+		<p>{{ post.lastUpdateDate }}</p>
+		<a href="index.php?action=updatePost&amp;id={{ post.id }}">Modifier le post</a>
+	{% endfor %}
+	<a href="index.php?action=addPost">Ajouter un post</a>
 {% endblock %}

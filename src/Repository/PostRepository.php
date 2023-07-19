@@ -12,12 +12,13 @@ class PostRepository
     public function getPost(string $id): Post
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"
+            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"
         );
         $statement->execute([$id]);
 
         $row = $statement->fetch();
         $post = new Post();
+        $post->id = $row['id'];
         $post->title = $row['title'];
         $post->author = $row['chapo'];
         $post->chapo = $row['author'];
@@ -30,11 +31,12 @@ class PostRepository
     public function getPosts(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts"
+            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts"
         );
         $posts = [];
         while(($row = $statement->fetch())) {
             $post = new Post();
+            $post->id = $row['id'];
             $post->title = $row['title'];
             $post->author = $row['chapo'];
             $post->chapo = $row['author'];
@@ -55,5 +57,15 @@ class PostRepository
             "INSERT INTO posts(author, title, chapo, content, lastUpdateDate) VALUES ('Hyacine Alnuma', ?, ?, ?, ?)"
         );
         $statement->execute([$inputs['title'], $inputs['chapo'], $inputs['content'], $date]);
+    }
+
+    public function updatePost($id, $inputs)
+    {
+        date_default_timezone_set('Europe/Paris');
+        $date = date('Y-m-d H:i:s', time());
+        $statement = $this->connection->getConnection()->prepare(
+            "UPDATE posts SET title = ?, chapo = ?, content = ?, lastUpdateDate = ? WHERE id = ?"
+        );
+        $statement->execute([$inputs['title'], $inputs['chapo'], $inputs['content'], $date, $id]);
     }
 }

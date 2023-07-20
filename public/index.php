@@ -3,11 +3,14 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\Controllers\PostController;
-use App\Controllers\PostsController;
-use App\Controllers\AddPostController;
-use App\Controllers\UpdatePostController;
-use App\Controllers\DeletePostController;
+use App\Controllers\Post\PostController;
+use App\Controllers\Post\PostsController;
+use App\Controllers\Post\AddPostController;
+use App\Controllers\Post\UpdatePostController;
+use App\Controllers\Post\DeletePostController;
+
+use App\Controllers\Comment\AddCommentController;
+
 use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -51,6 +54,12 @@ try {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
                 $id = $_GET['id'];
                 (new DeletePostController($twig))->execute($id);
+            }
+        } elseif (($_GET['action']) === 'addedComment') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                $inputs = $_POST;
+                (new AddCommentController($twig))->execute($id, $inputs);
             }
         }
     } else {

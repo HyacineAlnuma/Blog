@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Post;
 
 use App\Entity\Database;
 use App\Repository\PostRepository;
+use App\Controllers\Controller;
 
 class PostsController extends Controller
 {

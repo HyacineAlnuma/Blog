@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Post;
 
 use App\Entity\Database;
 use App\Repository\PostRepository;
+use App\Repository\CommentRepository;
+use App\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -15,8 +17,13 @@ class PostController extends Controller
         $postRepository->connection = $connection;
         $post = $postRepository->getPost($id);
 
+        $commentRepository = new CommentRepository();
+        $commentRepository->connection = $connection;
+        $comments = $commentRepository->getComments($id);
+
         $this->twig->display('post/index.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'comments' => $comments
         ]);
     }
 }

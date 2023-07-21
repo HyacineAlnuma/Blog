@@ -7,13 +7,19 @@ use App\Repository\PostRepository;
 
 class PostController extends Controller
 {
-    public function execute(string $id)
-    {
-        $connection = new Database();
+    private PostRepository $postRepository;
 
-        $postRepository = new PostRepository();
-        $postRepository->connection = $connection;
-        $post = $postRepository->getPost($id);
+    public function __construct($twig)
+    {
+        parent::__construct($twig);
+        $connection = new Database();
+        $this->postRepository = new PostRepository();
+        $this->postRepository->connection = $connection;
+    }
+
+    public function execute(int $id)
+    {
+        $post = $this->postRepository->getPost($id);
 
         $this->twig->display('post/index.html.twig', [
             'post' => $post

@@ -8,13 +8,19 @@ use App\Controllers\Controller;
 
 class AddPostController extends Controller
 {
+    private PostRepository $postRepository;
+
+    public function __construct($twig)
+    {
+        parent::__construct($twig);
+        $connection = new Database();
+        $this->postRepository = new PostRepository();
+        $this->postRepository->connection = $connection;
+    }
+
     public function execute($inputs)
     {
-        $connection = new Database();
-
-        $postRepository = new PostRepository();
-        $postRepository->connection = $connection;
-        $postRepository->addPost($inputs);
+        $this->postRepository->addPost($inputs);
 
         header("Location: index.php?action=posts");
     }

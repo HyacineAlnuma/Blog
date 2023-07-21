@@ -10,6 +10,7 @@ use App\Controllers\Controller;
 class PostController extends Controller
 {
     private PostRepository $postRepository;
+    private CommentRepository $commentRepository;
 
     public function __construct($twig)
     {
@@ -17,15 +18,14 @@ class PostController extends Controller
         $connection = new Database();
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = $connection;
+        $this->commentRepository = new CommentRepository();
+        $this->commentRepository->connection = $connection;
     }
 
     public function execute(int $id)
     {
         $post = $this->postRepository->getPost($id);
-
-        $commentRepository = new CommentRepository();
-        $commentRepository->connection = $connection;
-        $comments = $commentRepository->getComments($id);
+        $comments = $this->commentRepository->getComments($id);
 
         $this->twig->display('post/index.html.twig', [
             'post' => $post,

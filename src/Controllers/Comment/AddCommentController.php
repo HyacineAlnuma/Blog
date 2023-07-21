@@ -8,13 +8,19 @@ use App\Controllers\Controller;
 
 class AddCommentController extends Controller
 {
+    private CommentRepository $commentRepository;
+
+    public function __construct($twig)
+    {
+        parent::__construct($twig);
+        $connection = new Database();
+        $this->commentRepository = new CommentRepository();
+        $this->commentRepository->connection = $connection;
+    }
+
     public function execute($id, $inputs)
     {
-        $connection = new Database();
-
-        $commentRepository = new commentRepository();
-        $commentRepository->connection = $connection;
-        $commentRepository->addComment($id, $inputs);
+        $this->commentRepository->addComment($id, $inputs);
 
         header("Location: index.php?action=post&id=$id");
     }

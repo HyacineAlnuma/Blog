@@ -8,13 +8,19 @@ use App\Controllers\Controller;
 
 class DeletePostController extends Controller
 {
+    private PostRepository $postRepository;
+
+    public function __construct($twig)
+    {
+        parent::__construct($twig);
+        $connection = new Database();
+        $this->postRepository = new PostRepository();
+        $this->postRepository->connection = $connection;
+    }
+
     public function execute($id)
     {
-        $connection = new Database();
-
-        $postRepository = new PostRepository();
-        $postRepository->connection = $connection;
-        $postRepository->deletePost($id);
+        $this->postRepository->deletePost($id);
 
         header("Location: index.php?action=posts");
     }

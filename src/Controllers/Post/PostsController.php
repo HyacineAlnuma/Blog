@@ -8,13 +8,19 @@ use App\Controllers\Controller;
 
 class PostsController extends Controller
 {
+    private PostRepository $postRepository;
+
+    public function __construct($twig)
+    {
+        parent::__construct($twig);
+        $connection = new Database();
+        $this->postRepository = new PostRepository();
+        $this->postRepository->connection = $connection;
+    }
+
     public function execute()
     {
-        $connection = new Database();
-
-        $postRepository = new PostRepository();
-        $postRepository->connection = $connection;
-        $posts = $postRepository->getPosts();
+        $posts = $this->postRepository->getPosts();
 
         $this->twig->display('posts/index.html.twig', [
             'posts' => $posts

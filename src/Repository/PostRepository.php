@@ -20,8 +20,8 @@ class PostRepository
         $post = new Post();
         $post->id = $row['id'];
         $post->title = $row['title'];
-        $post->author = $row['chapo'];
-        $post->chapo = $row['author'];
+        $post->author = $row['author'];
+        $post->chapo = $row['chapo'];
         $post->content = $row['content'];
         $post->lastUpdateDate = $row['lastUpdateDate'];
 

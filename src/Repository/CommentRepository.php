@@ -33,7 +33,6 @@ class CommentRepository
     {
         date_default_timezone_set('Europe/Paris');
         $date = date('Y-m-d H:i:s', time());
-        // $postId = intval($id);
         $statement = $this->connection->getConnection()->prepare(
             "INSERT INTO comments(author, content, lastUpdateDate, id_post) VALUES ('Hyacine Alnuma', ?, ?, ?)"
         );

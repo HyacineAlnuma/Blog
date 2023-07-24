@@ -24,4 +24,8 @@ class AddPostController extends Controller
 
         header("Location: index.php?action=posts");
     }
+    public function render()
+    {
+        $this->twig->display('addPost/index.html.twig');
+    }
 }

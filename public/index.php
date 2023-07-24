@@ -32,21 +32,21 @@ try {
             $postsController = new PostsController($twig);
             $postsController->execute();
         } elseif (($_GET['action']) === 'addPost') {
-            $twig->display('addPost/index.html.twig');
-        } elseif (($_GET['action']) === 'addedPost') {
-            (new AddPostController($twig))->execute($_POST);
+            if (!$_POST) {
+                (new AddPostController($twig))->render();
+            } else {
+                (new AddPostController($twig))->execute($_POST);
+            }
         } elseif (($_GET['action']) === 'updatePost') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $id = $_GET['id'];
-                $twig->display('updatePost/index.html.twig', [
-                'id' => $id
-            ]);
-            }
-        } elseif (($_GET['action']) === 'updatedPost') {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $id = $_GET['id'];
-                $inputs = $_POST;
-                (new UpdatePostController($twig))->execute($id, $inputs);
+                if (!$_POST) {
+                    $id = $_GET['id'];
+                    (new UpdatePostController($twig))->render($id);
+                } else {
+                    $id = $_GET['id'];
+                    $inputs = $_POST;
+                    (new UpdatePostController($twig))->execute($id, $inputs);
+                }
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
@@ -54,12 +54,16 @@ try {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
                 $id = $_GET['id'];
                 (new DeletePostController($twig))->execute($id);
+            } else {
+                throw new Exception('Aucun identifiant de post envoyé');
             }
-        } elseif (($_GET['action']) === 'addedComment') {
+        } elseif (($_GET['action']) === 'addComment') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
                 $id = $_GET['id'];
                 $inputs = $_POST;
                 (new AddCommentController($twig))->execute($id, $inputs);
+            } else {
+                throw new Exception('Aucun identifiant de commentaire envoyé');
             }
         }
     } else {

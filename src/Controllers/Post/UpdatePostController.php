@@ -20,8 +20,16 @@ class UpdatePostController extends Controller
 
     public function execute($id, $inputs)
     {
+        $post = $this->postRepository->getPost($id);
         $this->postRepository->updatePost($id, $inputs);
 
         header("Location: index.php?action=post&id=$id");
+    }
+
+    public function render($id)
+    {
+        $this->twig->display('updatePost/index.html.twig', [
+            'id' => $id
+        ]);
     }
 }

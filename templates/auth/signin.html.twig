@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+	<form action="index.php?action=signin" method="post">
+		<label for="username">Nom d'utilisateur</label>
+		<input type="text" id="username" name="username">
+		<label for="email">Email</label>
+		<input type="email" id="email" name="email">
+		<label for="password">Mot de passe</label>
+		<input type="password" id="password" name="password">
+		<input type="submit">
+	</form>
+{% endblock %}

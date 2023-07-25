@@ -12,6 +12,8 @@ use App\Controllers\Post\DeletePostController;
 
 use App\Controllers\Comment\AddCommentController;
 
+use App\Controllers\Auth\SigninController;
+
 use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -71,6 +73,12 @@ try {
                 header("Location: index.php?action=posts");
             } else {
                 (new HomepageController($twig))->sendEmail($_POST);
+            }
+        } elseif (($_GET['action']) === 'signin') {
+            if (!$_POST) {
+                (new SigninController($twig))->render();
+            } else {
+                (new SigninController($twig))->execute($_POST);
             }
         }
     } else {

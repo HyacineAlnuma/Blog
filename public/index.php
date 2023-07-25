@@ -3,6 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Controllers\HomepageController;
 use App\Controllers\Post\PostController;
 use App\Controllers\Post\PostsController;
 use App\Controllers\Post\AddPostController;
@@ -65,9 +66,15 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }
+        } elseif (($_GET['action']) === 'contact') {
+            if (!$_POST) {
+                header("Location: index.php?action=posts");
+            } else {
+                (new HomepageController($twig))->sendEmail($_POST);
+            }
         }
     } else {
-        $twig->display('homepage.html.twig');
+        (new HomepageController($twig))->execute();
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();

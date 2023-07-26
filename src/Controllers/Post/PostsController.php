@@ -22,7 +22,7 @@ class PostsController extends Controller
     {
         $posts = $this->postRepository->getPosts();
 
-        $this->twig->display('posts/index.html.twig', [
+        $this->twig->display('pages/posts/index.html.twig', [
             'posts' => $posts
         ]);
     }

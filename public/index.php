@@ -19,7 +19,12 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 $loader = new FilesystemLoader(__DIR__.'/../templates');
-$twig = new Environment($loader);
+$twig = new Environment($loader, array(
+        'cache' => false,
+        'debug' => true,
+    ));
+
+$twig->addExtension(new \Twig\Extension\DebugExtension());
 
 try {
     if (isset($_GET['action']) && ($_GET['action'] !== '')) {
@@ -70,7 +75,7 @@ try {
             }
         } elseif (($_GET['action']) === 'contact') {
             if (!$_POST) {
-                header("Location: index.php?action=posts");
+                header("Location: index.php");
             } else {
                 (new HomepageController($twig))->sendEmail($_POST);
             }

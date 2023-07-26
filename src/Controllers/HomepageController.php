@@ -16,7 +16,7 @@ class HomepageController extends Controller
 
     public function execute()
     {
-        $this->twig->display('homepage/index.html.twig');
+        $this->twig->display('pages/homepage/index.html.twig');
     }
 
     public function sendEmail($inputs)
@@ -30,7 +30,7 @@ class HomepageController extends Controller
         if (mail($mailTo, $subject, $message)) {
             $confirmation = 'Votre email a bien été envoyé !';
             header("Location: index.php");
-            $this->twig->display('homepage/index.html.twig', [
+            $this->twig->display('pages/homepage/index.html.twig', [
                 'confirmation' => $confirmation
             ]);
         } else {

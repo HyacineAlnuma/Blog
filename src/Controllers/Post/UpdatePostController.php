@@ -29,7 +29,7 @@ class UpdatePostController extends Controller
     public function render($id)
     {
         $post = $this->postRepository->getPost($id);
-        $this->twig->display('updatePost/index.html.twig', [
+        $this->twig->display('pages/updatePost/index.html.twig', [
             'id' => $id,
             'post' => $post
         ]);

@@ -27,6 +27,6 @@ class SigninController extends Controller
 
     public function render()
     {
-        $this->twig->display('auth/signin.html.twig');
+        $this->twig->display('pages/auth/signin.html.twig');
     }
 }

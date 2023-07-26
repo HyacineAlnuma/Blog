@@ -27,6 +27,6 @@ class AddPostController extends Controller
 
     public function render()
     {
-        $this->twig->display('addPost/index.html.twig');
+        $this->twig->display('pages/addPost/index.html.twig');
     }
 }

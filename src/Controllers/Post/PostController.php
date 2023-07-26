@@ -27,7 +27,7 @@ class PostController extends Controller
         $post = $this->postRepository->getPost($id);
         $comments = $this->commentRepository->getComments($id);
 
-        $this->twig->display('post/index.html.twig', [
+        $this->twig->display('pages/post/index.html.twig', [
             'post' => $post,
             'comments' => $comments
         ]);

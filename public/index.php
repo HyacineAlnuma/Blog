@@ -5,6 +5,8 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\PostController;
 use App\Controllers\PostsController;
+use App\Controllers\AddPostController;
+use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -21,10 +23,14 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
+        } elseif (($_GET['action']) === 'posts') {
+            $postsController = new PostsController($twig);
+            $postsController->execute();
+        } elseif (($_GET['action']) === 'addPost') {
+            (new AddPostController($twig))->execute($_POST);
         }
     } else {
-        $postsController = new PostsController($twig);
-        $postsController->execute();
+        echo 'Non';
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();

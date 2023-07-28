@@ -3,21 +3,16 @@
 namespace App\Controllers\Post;
 
 use App\Entity\Database;
-use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
-use App\Controllers\Controller;
 
-class PostController extends Controller
+class PostController extends AbstractPostController
 {
-    private PostRepository $postRepository;
     private CommentRepository $commentRepository;
 
     public function __construct($twig)
     {
         parent::__construct($twig);
         $connection = new Database();
-        $this->postRepository = new PostRepository();
-        $this->postRepository->connection = $connection;
         $this->commentRepository = new CommentRepository();
         $this->commentRepository->connection = $connection;
     }

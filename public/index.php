@@ -32,11 +32,7 @@ try {
             $postsController = new PostsController($twig);
             $postsController->execute();
         } elseif (($_GET['action']) === 'addPost') {
-            if (!$_POST) {
-                (new AddPostController($twig))->render();
-            } else {
-                (new AddPostController($twig))->execute($_POST);
-            }
+            (new AddPostController($twig))->execute();
         } elseif (($_GET['action']) === 'updatePost') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!$_POST) {
@@ -45,7 +41,7 @@ try {
                 } else {
                     $id = $_GET['id'];
                     $inputs = $_POST;
-                    (new UpdatePostController($twig))->execute($id, $inputs);
+                    (new UpdatePostController($twig))->execute($id);
                 }
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
@@ -60,8 +56,7 @@ try {
         } elseif (($_GET['action']) === 'addComment') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
                 $id = $_GET['id'];
-                $inputs = $_POST;
-                (new AddCommentController($twig))->execute($id, $inputs);
+                (new AddCommentController($twig))->execute($id);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
             }

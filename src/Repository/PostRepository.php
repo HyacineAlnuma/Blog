@@ -9,14 +9,8 @@ class PostRepository
 {
     public Database $connection;
 
-    public function getPost(string $id): Post
+    private function hydratePost(array $row): Post
     {
-        $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"
-        );
-        $statement->execute([$id]);
-
-        $row = $statement->fetch();
         $post = new Post();
         $post->id = $row['id'];
         $post->title = $row['title'];
@@ -28,6 +22,17 @@ class PostRepository
         return $post;
     }
 
+    public function getPost(string $id): Post
+    {
+        $statement = $this->connection->getConnection()->prepare(
+            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"
+        );
+        $statement->execute([$id]);
+
+        $row = $statement->fetch();
+        return $this->hydratePost($row);
+    }
+
     public function getPosts(): array
     {
         $statement = $this->connection->getConnection()->query(
@@ -35,15 +40,7 @@ class PostRepository
         );
         $posts = [];
         while(($row = $statement->fetch())) {
-            $post = new Post();
-            $post->id = $row['id'];
-            $post->title = $row['title'];
-            $post->author = $row['author'];
-            $post->chapo = $row['chapo'];
-            $post->content = $row['content'];
-            $post->lastUpdateDate = $row['lastUpdateDate'];
-
-            $posts[] = $post;
+            $posts[] = $this->hydratePost($row);
         }
 
         return $posts;

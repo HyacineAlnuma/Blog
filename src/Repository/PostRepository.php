@@ -9,7 +9,7 @@ class PostRepository
 {
     public Database $connection;
 
-    private function hydratePost($row)
+    private function hydratePost(array $row): Post
     {
         $post = new Post();
         $post->title = $row['title'];
@@ -29,7 +29,8 @@ class PostRepository
         $statement->execute([$id]);
 
         $row = $statement->fetch();
-        hydratePost($row);
+        return $this->hydratePost($row);
+
     }
 
     public function getPosts(): array
@@ -39,7 +40,7 @@ class PostRepository
         );
         $posts = [];
         while(($row = $statement->fetch())) {
-            $posts[] = hydratePost($row);
+            $posts[] = $this->hydratePost($row);
         }
 
         return $posts;

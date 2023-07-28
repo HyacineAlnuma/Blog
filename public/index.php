@@ -7,6 +7,7 @@ use App\Controllers\PostController;
 use App\Controllers\PostsController;
 use App\Controllers\AddPostController;
 use App\Controllers\UpdatePostController;
+use App\Controllers\DeletePostController;
 use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -45,6 +46,11 @@ try {
                 (new UpdatePostController($twig))->execute($id, $inputs);
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
+            }
+        } elseif (($_GET['action']) === 'deletePost') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                (new DeletePostController($twig))->execute($id);
             }
         }
     } else {

@@ -68,4 +68,12 @@ class PostRepository
         );
         $statement->execute([$inputs['title'], $inputs['chapo'], $inputs['content'], $date, $id]);
     }
+
+    public function deletePost($id)
+    {
+        $statement = $this->connection->getConnection()->prepare(
+            "DELETE FROM posts WHERE id = ?"
+        );
+        $statement->execute([$id]);
+    }
 }

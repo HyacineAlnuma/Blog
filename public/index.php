@@ -4,13 +4,13 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\HomepageController;
+use App\Controllers\AdministrationController;
+
 use App\Controllers\Post\PostController;
 use App\Controllers\Post\PostsController;
 use App\Controllers\Post\AddPostController;
 use App\Controllers\Post\UpdatePostController;
 use App\Controllers\Post\DeletePostController;
-
-use App\Controllers\Comment\AddCommentController;
 
 use App\Controllers\Auth\SigninController;
 
@@ -62,11 +62,9 @@ try {
                 (new HomepageController($twig))->sendEmail($_POST);
             }
         } elseif (($_GET['action']) === 'signin') {
-            if (!$_POST) {
-                (new SigninController($twig))->render();
-            } else {
-                (new SigninController($twig))->execute($_POST);
-            }
+            (new SigninController($twig))->execute();
+        } elseif (($_GET['action']) === 'administration') {
+            (new AdministrationController($twig))->execute();
         }
     } else {
         (new HomepageController($twig))->execute();

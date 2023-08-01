@@ -4,7 +4,7 @@ namespace App\Controllers\Post;
 
 class UpdatePostController extends AbstractPostController
 {
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($_POST) {
             if (

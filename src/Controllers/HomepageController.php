@@ -19,7 +19,7 @@ class HomepageController extends Controller
         $this->twig->display('pages/homepage/index.html.twig');
     }
 
-    public function sendEmail($inputs)
+    public function sendEmail(array $inputs)
     {
         $username = $inputs['username'];
         $email = $inputs['email'];

@@ -18,15 +18,22 @@ class SigninController extends Controller
         $this->authRepository->connection = $connection;
     }
 
-    public function execute($inputs)
+    public function execute()
     {
-        $this->authRepository->signin($inputs);
+        if ($_POST) {
+            if (
+                $_POST['username'] !== ''
+                && $_POST['email'] !== ''
+                && $_POST['password'] !== ''
+            ) {
+                $this->authRepository->signin($_POST);
 
-        header("Location: index.php");
-    }
+                header("Location: index.php");
+            } else {
+                throw new Exception('Les champs ne sont pas correctement remplis');
+            }
+        }
 
-    public function render()
-    {
         $this->twig->display('pages/auth/signin.html.twig');
     }
 }

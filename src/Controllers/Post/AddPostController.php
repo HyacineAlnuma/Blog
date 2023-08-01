@@ -2,31 +2,23 @@
 
 namespace App\Controllers\Post;
 
-use App\Entity\Database;
-use App\Repository\PostRepository;
-use App\Controllers\Controller;
-
-class AddPostController extends Controller
+class AddPostController extends AbstractPostController
 {
-    private PostRepository $postRepository;
-
-    public function __construct($twig)
+    public function execute()
     {
-        parent::__construct($twig);
-        $connection = new Database();
-        $this->postRepository = new PostRepository();
-        $this->postRepository->connection = $connection;
-    }
+        if ($_POST) {
+            if (
+                $_POST['title'] !== ''
+                && $_POST['chapo'] !== ''
+                && $_POST['content'] !== ''
+            ) {
+                $this->postRepository->addPost($_POST);
 
-    public function execute($inputs)
-    {
-        $this->postRepository->addPost($inputs);
-
-        header("Location: index.php?action=posts");
-    }
-
-    public function render()
-    {
+                header("Location: index.php?action=posts");
+            } else {
+                throw new Exception('Les champs ne sont pas correctement remplis');
+            }
+        }
         $this->twig->display('addPost/index.html.twig');
     }
 }

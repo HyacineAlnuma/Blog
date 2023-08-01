@@ -33,21 +33,11 @@ try {
             $postsController = new PostsController($twig);
             $postsController->execute();
         } elseif (($_GET['action']) === 'addPost') {
-            if (!$_POST) {
-                (new AddPostController($twig))->render();
-            } else {
-                (new AddPostController($twig))->execute($_POST);
-            }
+            (new AddPostController($twig))->execute();
         } elseif (($_GET['action']) === 'updatePost') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!$_POST) {
-                    $id = $_GET['id'];
-                    (new UpdatePostController($twig))->render($id);
-                } else {
-                    $id = $_GET['id'];
-                    $inputs = $_POST;
-                    (new UpdatePostController($twig))->execute($id, $inputs);
-                }
+                $id = $_GET['id'];
+                (new UpdatePostController($twig))->execute($id);
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
@@ -65,12 +55,6 @@ try {
                 (new AddCommentController($twig))->execute($id, $inputs);
             } else {
                 throw new Exception('Aucun identifiant de commentaire envoyé');
-            }
-        } elseif (($_GET['action']) === 'contact') {
-            if (!$_POST) {
-                header("Location: index.php?action=posts");
-            } else {
-                (new HomepageController($twig))->sendEmail($_POST);
             }
         }
     } else {

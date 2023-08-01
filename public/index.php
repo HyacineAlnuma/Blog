@@ -35,14 +35,8 @@ try {
             (new AddPostController($twig))->execute();
         } elseif (($_GET['action']) === 'updatePost') {
             if(isset($_GET['id']) && $_GET['id'] > 0) {
-                if (!$_POST) {
-                    $id = $_GET['id'];
-                    (new UpdatePostController($twig))->render($id);
-                } else {
-                    $id = $_GET['id'];
-                    $inputs = $_POST;
-                    (new UpdatePostController($twig))->execute($id);
-                }
+                $id = $_GET['id'];
+                (new UpdatePostController($twig))->execute($id);
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
@@ -52,13 +46,6 @@ try {
                 (new DeletePostController($twig))->execute($id);
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
-            }
-        } elseif (($_GET['action']) === 'addComment') {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $id = $_GET['id'];
-                (new AddCommentController($twig))->execute($id);
-            } else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
             }
         }
     } else {

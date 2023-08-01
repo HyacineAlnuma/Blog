@@ -4,16 +4,21 @@ namespace App\Controllers\Post;
 
 class UpdatePostController extends AbstractPostController
 {
-    public function execute($id, $inputs)
+    public function execute($id)
     {
-        $post = $this->postRepository->getPost($id);
-        $this->postRepository->updatePost($id, $inputs);
+        if ($_POST) {
+            if (
+                $_POST['title'] !== ''
+                && $_POST['chapo'] !== ''
+                && $_POST['content'] !== ''
+            ) {
+                $this->postRepository->updatePost($id, $_POST);
 
-        header("Location: index.php?action=post&id=$id");
-    }
-
-    public function render($id)
-    {
+                header("Location: index.php?action=post&id=$id");
+            } else {
+                throw new Exception('Les champs ne sont pas correctement remplis');
+            }
+        }
         $post = $this->postRepository->getPost($id);
         $this->twig->display('updatePost/index.html.twig', [
             'id' => $id,

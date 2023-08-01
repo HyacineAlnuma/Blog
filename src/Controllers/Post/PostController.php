@@ -19,6 +19,13 @@ class PostController extends AbstractPostController
 
     public function execute(int $id)
     {
+        if ($_POST) {
+            if ($_POST['content'] !== '') {
+                $this->commentRepository->addComment($id, $_POST);
+            } else {
+                throw new Exception("Le champ n'est' pas correctement rempli");
+            }
+        }
         $post = $this->postRepository->getPost($id);
         $comments = $this->commentRepository->getComments($id);
 

@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Post;
 
 use App\Entity\Database;
 use App\Repository\PostRepository;
+use App\Controllers\Controller;
 
-class PostsController extends Controller
+abstract class AbstractPostController extends Controller
 {
-    private PostRepository $postRepository;
+    protected PostRepository $postRepository;
 
     public function __construct($twig)
     {
@@ -15,14 +16,5 @@ class PostsController extends Controller
         $connection = new Database();
         $this->postRepository = new PostRepository();
         $this->postRepository->connection = $connection;
-    }
-
-    public function execute()
-    {
-        $posts = $this->postRepository->getPosts();
-
-        $this->twig->display('posts/index.html.twig', [
-            'posts' => $posts
-        ]);
     }
 }

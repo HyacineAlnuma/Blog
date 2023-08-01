@@ -4,12 +4,9 @@
 	<a href="index.php">Accueil</a>
 	{% for post in posts %}
 		<h1>{{ post.title }}</h1>
-		<h2>{{ post.chapo }}</h2>
-		<p>{{ post.author }}</p>
-		<p>{{ post.content }}</p>
 		<p>{{ post.lastUpdateDate }}</p>
-		<a href="index.php?action=updatePost&amp;id={{ post.id }}">Modifier le post</a>
-		<a href="index.php?action=deletePost&amp;id={{ post.id }}">Supprimer le post</a>
+		<h2>{{ post.chapo }}</h2>
+		<a href="index.php?action=post&amp;id={{ post.id }}">Lien vers le post</a>
 	{% endfor %}
 	<br>
 	<a href="index.php?action=addPost">Ajouter un post</a>

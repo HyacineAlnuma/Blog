@@ -31,8 +31,6 @@ class PostRepository
 
         $row = $statement->fetch();
         return $this->hydratePost($row);
-
-
     }
 
     public function getPosts(): array
@@ -42,7 +40,6 @@ class PostRepository
         );
         $posts = [];
         while(($row = $statement->fetch())) {
-
             $posts[] = $this->hydratePost($row);
         }
 

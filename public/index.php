@@ -48,13 +48,11 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
-        } elseif (($_GET['action']) === 'addComment') {
-            if(isset($_GET['id']) && $_GET['id'] > 0) {
-                $id = $_GET['id'];
-                $inputs = $_POST;
-                (new AddCommentController($twig))->execute($id, $inputs);
+        } elseif (($_GET['action']) === 'contact') {
+            if (!$_POST) {
+                header("Location: index.php?action=posts");
             } else {
-                throw new Exception('Aucun identifiant de commentaire envoyé');
+                (new HomepageController($twig))->sendEmail($_POST);
             }
         }
     } else {

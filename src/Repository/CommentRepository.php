@@ -9,6 +9,17 @@ class CommentRepository
 {
     public Database $connection;
 
+    private function hydrateComment(array $row): Comment
+    {
+        $comment = new Comment();
+        $comment->id = $row['id'];
+        $comment->author = $row['author'];
+        $comment->content = $row['content'];
+        $comment->lastUpdateDate = $row['lastUpdateDate'];
+
+        return $comment;
+    }
+
     public function getComments($id): array
     {
         $statement = $this->connection->getConnection()->prepare(
@@ -17,13 +28,7 @@ class CommentRepository
         $statement->execute([$id]);
         $comments = [];
         while(($row = $statement->fetch())) {
-            $comment = new Comment();
-            $comment->id = $row['id'];
-            $comment->author = $row['author'];
-            $comment->content = $row['content'];
-            $comment->lastUpdateDate = $row['lastUpdateDate'];
-
-            $comments[] = $comment;
+            $comments[] = $this->hydrateComment($row);
         }
 
         return $comments;

@@ -30,6 +30,7 @@ class PostRepository
         $statement->execute([$id]);
 
         $row = $statement->fetch();
+        return $this->hydratePost($row);
     }
 
     public function getPosts(): array

@@ -21,9 +21,15 @@ class AdministrationController extends Controller
     public function execute()
     {
         $comments = $this->commentRepository->getComments();
+        $nonApprovedComments = [];
+        for ($i = 0; $i < count($comments); $i++) {
+            if ($comments[$i]->approved == 0) {
+                $nonApprovedComments[] = $comments[$i];
+            }
+        }
 
         $this->twig->display('pages/administration/index.html.twig', [
-            'comments' => $comments
+            'comments' => $nonApprovedComments
         ]);
     }
 }

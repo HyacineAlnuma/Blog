@@ -12,6 +12,9 @@ use App\Controllers\Post\AddPostController;
 use App\Controllers\Post\UpdatePostController;
 use App\Controllers\Post\DeletePostController;
 
+use App\Controllers\Comment\ApproveCommentController;
+use App\Controllers\Comment\DeleteCommentController;
+
 use App\Controllers\Auth\SigninController;
 
 use App\Entity\Post;
@@ -65,6 +68,16 @@ try {
             (new SigninController($twig))->execute();
         } elseif (($_GET['action']) === 'administration') {
             (new AdministrationController($twig))->execute();
+        } elseif (($_GET['action']) === 'approveComment') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                (new ApproveCommentController($twig))->execute($id);
+            }
+        } elseif (($_GET['action']) === 'deleteComment') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                (new DeleteCommentController($twig))->execute($id);
+            }
         }
     } else {
         (new HomepageController($twig))->execute();

@@ -58,14 +58,12 @@ class CommentRepository
         $statement->execute([$inputs['content'], $date, $id]);
     }
 
-    public function updateComment($id, $inputs)
+    public function approveComment($id)
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = date('Y-m-d H:i:s', time());
         $statement = $this->connection->getConnection()->prepare(
-            "UPDATE comments SET content = ?, lastUpdateDate = ? WHERE id = ?"
+            "UPDATE comments SET approved = 1 WHERE id = ?"
         );
-        $statement->execute([$inputs['content'], $date, $id]);
+        $statement->execute([$id]);
     }
 
     public function deleteComment($id)

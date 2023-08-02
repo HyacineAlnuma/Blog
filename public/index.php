@@ -60,7 +60,8 @@ try {
             }
         } elseif (($_GET['action']) === 'contact') {
             if (!$_POST) {
-                header("Location: index.php");
+                // header("Location: index.php");
+                var_dump($_POST);
             } else {
                 (new HomepageController($twig))->sendEmail($_POST);
             }

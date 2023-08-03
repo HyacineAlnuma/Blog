@@ -16,16 +16,30 @@ class CommentRepository
         $comment->author = $row['author'];
         $comment->content = $row['content'];
         $comment->lastUpdateDate = $row['lastUpdateDate'];
+        $comment->approved = $row['approved'];
 
         return $comment;
     }
 
-    public function getComments($id): array
+    public function getPostComments($id): array
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ?"
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ?"
         );
         $statement->execute([$id]);
+        $comments = [];
+        while(($row = $statement->fetch())) {
+            $comments[] = $this->hydrateComment($row);
+        }
+
+        return $comments;
+    }
+
+    public function getComments(): array
+    {
+        $statement = $this->connection->getConnection()->query(
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments"
+        );
         $comments = [];
         while(($row = $statement->fetch())) {
             $comments[] = $this->hydrateComment($row);
@@ -39,7 +53,7 @@ class CommentRepository
         date_default_timezone_set('Europe/Paris');
         $date = date('Y-m-d H:i:s', time());
         $statement = $this->connection->getConnection()->prepare(
-            "INSERT INTO comments(author, content, lastUpdateDate, id_post) VALUES ('Hyacine Alnuma', ?, ?, ?)"
+            "INSERT INTO comments(author, content, lastUpdateDate, id_post, approved) VALUES ('Hyacine Alnuma', ?, ?, ?, 0)"
         );
         $statement->execute([$inputs['content'], $date, $id]);
     }

@@ -8,7 +8,7 @@ class PostsController extends AbstractPostController
     {
         $posts = $this->postRepository->getPosts();
 
-        $this->twig->display('posts/index.html.twig', [
+        $this->twig->display('pages/posts/index.html.twig', [
             'posts' => $posts
         ]);
     }

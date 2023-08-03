@@ -29,17 +29,11 @@ class PostController extends AbstractPostController
             }
         }
         $post = $this->postRepository->getPost($id);
-        $comments = $this->commentRepository->getPostComments($id);
-        $approvedComments = [];
-        for ($i = 0; $i < count($comments); $i++) {
-            if ($comments[$i]->approved == 1) {
-                $approvedComments[] = $comments[$i];
-            }
-        }
+        $comments = $this->commentRepository->getPostApprovedComments($id);
 
         $this->twig->display('pages/post/index.html.twig', [
             'post' => $post,
-            'comments' => $approvedComments,
+            'comments' => $comments,
             'commentSent' => $commentSent
         ]);
     }

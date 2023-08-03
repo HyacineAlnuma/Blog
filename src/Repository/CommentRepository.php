@@ -21,10 +21,10 @@ class CommentRepository
         return $comment;
     }
 
-    public function getPostComments($id): array
+    public function getPostApprovedComments($id): array
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ?"
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ? AND approved = 1"
         );
         $statement->execute([$id]);
         $comments = [];
@@ -35,10 +35,10 @@ class CommentRepository
         return $comments;
     }
 
-    public function getComments(): array
+    public function getNonApprovedComments(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments"
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE approved = 0"
         );
         $comments = [];
         while(($row = $statement->fetch())) {

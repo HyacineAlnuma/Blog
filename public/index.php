@@ -65,6 +65,14 @@ try {
             (new SigninController($twig))->execute();
         } elseif (($_GET['action']) === 'administration') {
             (new AdministrationController($twig))->execute();
+        } elseif (($_GET['action']) === 'addComment') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                $inputs = $_POST;
+                (new AddCommentController($twig))->execute($id, $inputs);
+            } else {
+                throw new Exception('Aucun identifiant de commentaire envoyé');
+            }
         }
     } else {
         (new HomepageController($twig))->execute();

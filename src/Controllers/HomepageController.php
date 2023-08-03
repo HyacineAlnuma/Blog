@@ -30,9 +30,6 @@ class HomepageController extends Controller
         if (mail($mailTo, $subject, $message)) {
             $confirmation = 'Votre email a bien été envoyé !';
             header("Location: index.php");
-            $this->twig->display('pages/homepage/index.html.twig', [
-                'confirmation' => $confirmation
-            ]);
         } else {
             echo "Votre email n'a pas été envoyé";
         }

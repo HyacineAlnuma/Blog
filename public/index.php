@@ -3,6 +3,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use App\Controllers\HomepageController;
 use App\Controllers\Post\PostController;
 use App\Controllers\Post\PostsController;
 use App\Controllers\Post\AddPostController;
@@ -47,9 +48,17 @@ try {
             } else {
                 throw new Exception('Aucun identifiant de post envoyé');
             }
+        } elseif (($_GET['action']) === 'addComment') {
+            if(isset($_GET['id']) && $_GET['id'] > 0) {
+                $id = $_GET['id'];
+                $inputs = $_POST;
+                (new AddCommentController($twig))->execute($id, $inputs);
+            } else {
+                throw new Exception('Aucun identifiant de commentaire envoyé');
+            }
         }
     } else {
-        $twig->display('homepage.html.twig');
+        (new HomepageController($twig))->execute();
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();

@@ -19,6 +19,6 @@ class AddPostController extends AbstractPostController
                 throw new Exception('Les champs ne sont pas correctement remplis');
             }
         }
-        $this->twig->display('addPost/index.html.twig');
+        $this->twig->display('pages/addPost/index.html.twig');
     }
 }

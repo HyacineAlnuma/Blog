@@ -22,7 +22,7 @@ class PostRepository
         return $post;
     }
 
-    public function getPost(string $id): Post
+    public function getPost(int $id): Post
     {
         $statement = $this->connection->getConnection()->prepare(
             "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"

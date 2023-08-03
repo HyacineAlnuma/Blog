@@ -4,7 +4,7 @@ namespace App\Controllers\Post;
 
 class UpdatePostController extends AbstractPostController
 {
-    public function execute($id)
+    public function execute(int $id)
     {
         if ($_POST) {
             if (
@@ -20,7 +20,7 @@ class UpdatePostController extends AbstractPostController
             }
         }
         $post = $this->postRepository->getPost($id);
-        $this->twig->display('updatePost/index.html.twig', [
+        $this->twig->display('pages/updatePost/index.html.twig', [
             'id' => $id,
             'post' => $post
         ]);

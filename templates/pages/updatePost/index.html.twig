@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+
+{% block main %}
+	<!-- Page Header-->
+	<header class="masthead" style="background-image: url('img/home-bg.jpg')">
+		<div class="container position-relative px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<div class="site-heading">
+						<h1>Modifier le post</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Post Content-->
+	<article class="mb-4">
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<form action="index.php?action=updatePost&amp;id={{ id }}" class="post-preview mt-5" method="post">
+					<div class="mb-3">
+						<label for="title" class="form-label">Titre</label>
+						<input type="text" class="form-control" id="title" name="title" value="{{ post.title }}">
+					</div>
+					<div class="mb-3">
+						<label for="chapo" class="form-label">Chapo</label>
+						<input type="text" class="form-control" id="chapo" name="chapo" value="{{ post.chapo }}">
+					</div>
+					<div class="mb-3">
+						<label for="content" class="form-label">Contenu</label>
+						<input type="text" class="form-control" id="content" name="content" value="{{ post.content }}">
+					</div>
+					<button type="submit" class="btn btn-primary">Modifier le post</button>
+				</form>
+			</div>
+		</div>
+	</article>
+
+
+	{# 
+				<form action="index.php?action=updatePost&amp;id={{ id }}" method="post">
+					<label for="title">Titre</label>
+					<input type="text" id="title" name="title" value="{{ post.title }}">
+					<label for="chapo">Chapo</label>
+					<input type="text" id="chapo" name="chapo" value="{{ post.chapo }}">
+					<label for="content">Contenu</label>
+					<input type="text" id="content" name="content" value="{{ post.content }}">
+					<input type="submit">
+				</form> #}
+{% endblock %}

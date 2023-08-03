@@ -4,7 +4,7 @@ namespace App\Controllers\Post;
 
 class DeletePostController extends AbstractPostController
 {
-    public function execute($id)
+    public function execute(int $id)
     {
         $this->postRepository->deletePost($id);
 

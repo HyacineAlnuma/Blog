@@ -18,6 +18,11 @@
 	<article class="mb-4">
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
+				{% if errors[0] != '' %}
+					<div class="alert alert-danger" role="alert">
+						<p>{{ errors[0] }}</p>
+					</div>
+				{% endif %}
 				<form action="index.php?action=updatePost&amp;id={{ id }}" class="post-preview mt-5" method="post">
 					<div class="mb-3">
 						<label for="title" class="form-label">Titre</label>

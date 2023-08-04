@@ -3,7 +3,7 @@
 
 {% block main %}
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url('img/picture-bg.jpg')">
+	<header class="masthead masthead-main" style="background-image: url('img/picture-bg.jpg')">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -17,6 +17,15 @@
 	</header>
 	<!-- Main Content-->
 	<div class="container mb-5">
+		{% if emailStatus == 'sent' %}
+			<div class="alert alert-success" role="alert">
+				<p>Votre email a bien été envoyé !</p>
+			</div>
+		{% elseif emailStatus == 'inputError' %}
+			<div class="alert alert-danger" role="alert">
+				<p>Les champs ne sont pas correctement remplis</p>
+			</div>
+		{% endif %}
 		<h2 class="post-title mb-5">Me contacter</h2>
 		<form action="index.php?action=contact" class="container px-4 px-lg-5 mb-5" method="post">
 			<div class="mb-3">

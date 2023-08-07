@@ -50,12 +50,17 @@ class CommentRepository
 
     public function addComment($id, $inputs)
     {
+        $approved = 0;
+        if ($_SESSION['userRole'] == 'admin') {
+            var_dump('haha');
+            $approved = 1;
+        }
         date_default_timezone_set('Europe/Paris');
         $date = date('Y-m-d H:i:s', time());
         $statement = $this->connection->getConnection()->prepare(
-            "INSERT INTO comments(author, content, lastUpdateDate, id_post, approved) VALUES ('Hyacine Alnuma', ?, ?, ?, 0)"
+            "INSERT INTO comments(author, content, lastUpdateDate, id_post, id_user, approved) VALUES (?, ?, ?, ?, ?, ?)"
         );
-        $statement->execute([$inputs['content'], $date, $id]);
+        $statement->execute([$_SESSION['username'], $inputs['content'], $date, $id, $_SESSION['userId'], $approved]);
     }
 
     public function approveComment($id)

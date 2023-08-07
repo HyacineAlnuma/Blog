@@ -22,6 +22,8 @@ class HomepageController extends Controller
     public function execute()
     {
         $this->twig->display('pages/homepage/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'emailStatus' => $this->emailStatus
         ]);
     }

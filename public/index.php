@@ -1,5 +1,9 @@
 <?php
 
+session_start();
+// $_SESSION['userRole'] = '';
+// $_SESSION['loggedIn'] = false;
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\HomepageController;
@@ -15,6 +19,7 @@ use App\Controllers\Comment\ApproveCommentController;
 use App\Controllers\Comment\DeleteCommentController;
 
 use App\Controllers\Auth\SigninController;
+use App\Controllers\Auth\LoginController;
 
 use App\Entity\Post;
 use Twig\Environment;
@@ -31,7 +36,6 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 try {
     if (!isset($_GET['action']) || ($_GET['action'] == '')) {
         (new HomepageController($twig))->execute();
-        exit;
     } elseif (($_GET['action']) === 'post' && isset($_GET['id']) && $_GET['id'] > 0) {
         $id = $_GET['id'];
         $postController = new PostController($twig);
@@ -51,6 +55,10 @@ try {
         (new HomepageController($twig))->sendEmail();
     } elseif (($_GET['action']) === 'signin') {
         (new SigninController($twig))->execute();
+    } elseif (($_GET['action']) === 'login') {
+        (new LoginController($twig))->login();
+    } elseif (($_GET['action']) === 'logout') {
+        (new LoginController($twig))->logout();
     } elseif (($_GET['action']) === 'administration') {
         (new AdministrationController($twig))->execute();
     } elseif (($_GET['action']) === 'approveComment' && isset($_GET['id']) && $_GET['id'] > 0) {
@@ -60,7 +68,10 @@ try {
         $id = $_GET['id'];
         (new DeleteCommentController($twig))->execute($id);
     } else {
-        $twig->display('pages/error/index.html.twig');
+        $twig->display('pages/error/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole']
+        ]);
     }
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();

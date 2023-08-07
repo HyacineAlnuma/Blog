@@ -13,11 +13,13 @@ class UpdatePostController extends AbstractPostController
 
                 header("Location: index.php?action=post&id=$id");
             } else {
-                $errors[] = 'Les champs ne sont pas correctement remplis';
+                $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
         $post = $this->postRepository->getPost($id);
         $this->twig->display('pages/updatePost/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'id' => $id,
             'post' => $post,
             'errors' => $errors

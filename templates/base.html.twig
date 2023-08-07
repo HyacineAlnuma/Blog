@@ -38,12 +38,18 @@
 						<li class="nav-item">
 							<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=posts">Posts</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=signin">Créer un compte</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=login">Se connecter</a>
-						</li>
+						{% if loggedIn == true %}
+							<li class="nav-item">
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=logout">Se déconnecter</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=signin">Créer un compte</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=login">Se connecter</a>
+							</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
@@ -83,9 +89,11 @@
 								</a>
 							</li>
 						</ul>
-						<div class="small text-center justify-content-center">
-							<a href="index.php?action=administration">Interface d'administration</a>
-						</div>
+						{% if userRole == 'admin' %}
+							<div class="small text-center justify-content-center">
+								<a href="index.php?action=administration">Interface d'administration</a>
+							</div>
+						{% endif %}
 						<div class="small text-center text-muted fst-italic">Copyright &copy; Your Website 2023</div>
 					</div>
 				</div>

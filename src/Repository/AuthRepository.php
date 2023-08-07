@@ -13,8 +13,26 @@ class AuthRepository
     {
         $passwordHash = password_hash($inputs['password'], PASSWORD_DEFAULT);
         $statement = $this->connection->getConnection()->prepare(
-            "INSERT INTO users(username, email, passwordHash) VALUES ( ?, ?, ?)"
+            "INSERT INTO users(username, email, passwordHash, userRole) VALUES ( ?, ?, ?, 'user')"
         );
         $statement->execute([$inputs['username'], $inputs['email'], $passwordHash]);
+    }
+
+    public function login($inputs): User
+    {
+        $statement = $this->connection->getConnection()->prepare(
+            "SELECT id, username, passwordHash, userRole FROM users WHERE username = ?"
+        );
+        $statement->execute([$inputs['username']]);
+        var_dump($inputs['username']);
+
+        $user = new User();
+        $row = $statement->fetch();
+        $user->id = $row['id'];
+        $user->username = $row['username'];
+        $user->passwordHash = $row['passwordHash'];
+        $user->userRole = $row['userRole'];
+
+        return $user;
     }
 }

@@ -13,10 +13,12 @@ class AddPostController extends AbstractPostController
 
                 header("Location: index.php?action=posts");
             } else {
-                $errors[] = 'Les champs ne sont pas correctement remplis';
+                $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
         $this->twig->display('pages/addPost/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'errors' => $errors
         ]);
     }

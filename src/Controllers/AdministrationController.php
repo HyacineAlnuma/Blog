@@ -23,6 +23,8 @@ class AdministrationController extends Controller
         $comments = $this->commentRepository->getNonApprovedComments();
 
         $this->twig->display('pages/administration/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'comments' => $comments
         ]);
     }

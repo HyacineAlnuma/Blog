@@ -32,6 +32,8 @@ class PostController extends AbstractPostController
         $comments = $this->commentRepository->getPostApprovedComments($id);
 
         $this->twig->display('pages/post/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'post' => $post,
             'comments' => $comments,
             'commentSent' => $commentSent

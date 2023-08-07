@@ -9,6 +9,8 @@ class PostsController extends AbstractPostController
         $posts = $this->postRepository->getPosts();
 
         $this->twig->display('pages/posts/index.html.twig', [
+            'loggedIn' => $_SESSION['loggedIn'],
+            'userRole' => $_SESSION['userRole'],
             'posts' => $posts
         ]);
     }

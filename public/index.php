@@ -76,3 +76,44 @@ try {
 } catch (Exception $e) {
     $errorMessage = $e->getMessage();
 }
+
+// if ($_SERVER['REQUEST_URI'] === '/projet/public/') {
+//     (new HomepageController($twig))->execute();
+// } elseif (($_GET['action']) === 'post' && isset($_GET['id']) && $_GET['id'] > 0) {
+//     $id = $_GET['id'];
+//     $postController = new PostController($twig);
+//     $postController->execute($id);
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/posts') {
+//     var_dump('haha');
+//     $postsController = new PostsController($twig);
+//     $postsController->execute();
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/addPost') {
+//     (new AddPostController($twig))->execute();
+// } elseif (($_GET['action']) === 'updatePost' && isset($_GET['id']) && $_GET['id'] > 0) {
+//     $id = $_GET['id'];
+//     (new UpdatePostController($twig))->execute($id);
+// } elseif (($_GET['action']) === 'deletePost' && isset($_GET['id']) && $_GET['id'] > 0) {
+//     $id = $_GET['id'];
+//     (new DeletePostController($twig))->execute($id);
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/contact') {
+//     (new HomepageController($twig))->sendEmail();
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/signin') {
+//     (new SigninController($twig))->execute();
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/login') {
+//     (new LoginController($twig))->login();
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/logout') {
+//     (new LoginController($twig))->logout();
+// } elseif ($_SERVER['REQUEST_URI'] === '/projet/public/administration') {
+//     (new AdministrationController($twig))->execute();
+// } elseif (($_GET['action']) === 'approveComment' && isset($_GET['id']) && $_GET['id'] > 0) {
+//     $id = $_GET['id'];
+//     (new ApproveCommentController($twig))->execute($id);
+// } elseif (($_GET['action']) === 'deleteComment' && isset($_GET['id']) && $_GET['id'] > 0) {
+//     $id = $_GET['id'];
+//     (new DeleteCommentController($twig))->execute($id);
+// } else {
+//     $twig->display('pages/error/index.html.twig', [
+//         'loggedIn' => $_SESSION['loggedIn'],
+//         'userRole' => $_SESSION['userRole']
+//     ]);
+// }

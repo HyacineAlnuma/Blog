@@ -37,9 +37,11 @@
 					<hr class="my-4"/>
 				{% endfor %}
 				<!-- Pager-->
-				<div class="d-flex justify-content-end mb-4">
-					<a class="btn btn-primary text-uppercase" href="index.php?action=addPost">Ajouter un post</a>
-				</div>
+				{% if userRole == 'admin' %}
+					<div class="d-flex justify-content-end mb-4">
+						<a class="btn btn-primary text-uppercase" href="index.php?action=addPost">Ajouter un post</a>
+					</div>
+				{% endif %}
 			</div>
 		</div>
 	</div>

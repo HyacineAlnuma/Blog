@@ -25,7 +25,7 @@ class PostRepository
     public function getPost(int $id): Post
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts WHERE id = ?"
+            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%i') AS lastUpdateDate FROM posts WHERE id = ?"
         );
         $statement->execute([$id]);
 
@@ -36,7 +36,7 @@ class PostRepository
     public function getPosts(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM posts"
+            "SELECT id, title, chapo, author, content, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%i') AS lastUpdateDate FROM posts"
         );
         $posts = [];
         while(($row = $statement->fetch())) {

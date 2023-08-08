@@ -21,7 +21,6 @@ class AdministrationController extends Controller
     public function execute()
     {
         $comments = $this->commentRepository->getNonApprovedComments();
-
         $this->twig->display('pages/administration/index.html.twig', [
             'loggedIn' => $_SESSION['loggedIn'],
             'userRole' => $_SESSION['userRole'],

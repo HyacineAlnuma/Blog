@@ -3,7 +3,7 @@
 
 {% block main %}
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url('img/home-bg.jpg')">
+	<header class="masthead" style="background-image: url('img/admin.jpg')">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7 sm-12">
@@ -35,7 +35,9 @@
 					{% for comment in comments %}
 						<tr class="align-middle">
 							<td>{{ comment.author}}</td>
-							<td>#</td>
+							<td>
+								<a href="index.php?action=post&amp;id={{ comment.id_post }}">Lien vers le post</a>
+							</td>
 							<td>{{ comment.content }}</td>
 							<td>{{ comment.lastUpdateDate }}</td>
 							<td>

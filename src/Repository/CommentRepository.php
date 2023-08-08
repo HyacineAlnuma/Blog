@@ -16,6 +16,7 @@ class CommentRepository
         $comment->author = $row['author'];
         $comment->content = $row['content'];
         $comment->lastUpdateDate = $row['lastUpdateDate'];
+        $comment->id_post = $row['id_post'];
         $comment->approved = $row['approved'];
 
         return $comment;
@@ -24,7 +25,7 @@ class CommentRepository
     public function getPostApprovedComments($id): array
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ? AND approved = 1"
+            "SELECT id, author, content, approved, id_post, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%i') AS lastUpdateDate FROM comments WHERE id_post = ? AND approved = 1"
         );
         $statement->execute([$id]);
         $comments = [];
@@ -38,12 +39,13 @@ class CommentRepository
     public function getNonApprovedComments(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE approved = 0"
+            "SELECT id, author, content, approved, id_post, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%i') AS lastUpdateDate FROM comments WHERE approved = 0"
         );
         $comments = [];
         while(($row = $statement->fetch())) {
             $comments[] = $this->hydrateComment($row);
         }
+
 
         return $comments;
     }
@@ -52,7 +54,6 @@ class CommentRepository
     {
         $approved = 0;
         if ($_SESSION['userRole'] == 'admin') {
-            var_dump('haha');
             $approved = 1;
         }
         date_default_timezone_set('Europe/Paris');

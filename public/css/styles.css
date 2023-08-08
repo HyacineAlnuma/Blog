@@ -7103,6 +7103,7 @@ textarea.form-control-lg {
 
 .justify-content-around {
   justify-content: space-around !important;
+  gap: 20px;
 }
 
 .justify-content-evenly {

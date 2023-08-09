@@ -6,7 +6,7 @@ use App\Entity\Database;
 use App\Repository\AuthRepository;
 use App\Controllers\Controller;
 
-class SigninController extends Controller
+class RegisterController extends Controller
 {
     private PostRepository $postRepository;
 
@@ -23,15 +23,21 @@ class SigninController extends Controller
         $errors = [];
         if ($_POST) {
             if ($_POST['username'] !== '' && $_POST['email'] !== '' && $_POST['password'] !== '') {
-                $this->authRepository->signin($_POST);
+                $getByUsername = $this->authRepository->getUserByUsername($_POST);
+                $getByEmail = $this->authRepository->getUserByEmail($_POST);
+                if (isset($getByUsername) || isset($getByEmail)) {
+                    $errors[] = "Ce nom d'utilisateur ou cet email sont déjà utilisés.";
+                } else {
+                    $this->authRepository->register($_POST);
 
-                header("Location: index.php");
+                    header("Location: /login");
+                }
             } else {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
 
-        $this->twig->display('pages/auth/signin.html.twig', [
+        $this->display('pages/auth/register.html.twig', [
             'errors' => $errors
         ]);
     }

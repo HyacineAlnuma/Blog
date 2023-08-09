@@ -25,7 +25,7 @@
 		<!-- Navigation-->
 		<nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
 			<div class="container px-4 px-lg-5">
-				<a class="navbar-brand" href="index.php">Blog</a>
+				<a class="navbar-brand" href="/">Blog</a>
 				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
 					Menu
 					<i class="fas fa-bars"></i>
@@ -33,21 +33,21 @@
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav ms-auto py-4 py-lg-0">
 						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php">Accueil</a>
+							<a class="nav-link px-lg-3 py-3 py-lg-4" href="/">Accueil</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=posts">Posts</a>
+							<a class="nav-link px-lg-3 py-3 py-lg-4" href="/posts">Posts</a>
 						</li>
-						{% if loggedIn == true %}
+						{% if user == true %}
 							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=logout">Se déconnecter</a>
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="/logout">Se déconnecter</a>
 							</li>
 						{% else %}
 							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=signin">Créer un compte</a>
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="/register">Créer un compte</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link px-lg-3 py-3 py-lg-4" href="index.php?action=login">Se connecter</a>
+								<a class="nav-link px-lg-3 py-3 py-lg-4" href="/login">Se connecter</a>
 							</li>
 						{% endif %}
 					</ul>
@@ -89,9 +89,9 @@
 								</a>
 							</li>
 						</ul>
-						{% if userRole == 'admin' %}
+						{% if user.userRole == 'admin' %}
 							<div class="small text-center justify-content-center">
-								<a href="index.php?action=administration">Interface d'administration</a>
+								<a href="/administration">Interface d'administration</a>
 							</div>
 						{% endif %}
 						<div class="small text-center text-muted fst-italic">Copyright &copy; Blog Hyacine Alnuma 2023</div>

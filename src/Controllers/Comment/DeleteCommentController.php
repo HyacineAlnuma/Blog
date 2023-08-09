@@ -22,6 +22,6 @@ class DeleteCommentController extends Controller
     {
         $this->commentRepository->deleteComment($id);
 
-        header("Location: index.php?action=administration");
+        header("Location: /administration");
     }
 }

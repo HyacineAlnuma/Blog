@@ -31,12 +31,12 @@ class PostController extends AbstractPostController
         $post = $this->postRepository->getPost($id);
         $comments = $this->commentRepository->getPostApprovedComments($id);
 
-        $this->twig->display('pages/post/index.html.twig', [
-            'loggedIn' => $_SESSION['loggedIn'],
-            'userRole' => $_SESSION['userRole'],
+        $this->display('pages/post/index.html.twig', [
             'post' => $post,
             'comments' => $comments,
             'commentSent' => $commentSent
         ]);
+
+
     }
 }

@@ -23,7 +23,7 @@
 						<p>{{ errors[0] }}</p>
 					</div>
 				{% endif %}
-				<form action="index.php?action=updatePost&amp;id={{ id }}" class="post-preview mt-5" method="post">
+				<form action="/updatePost/{{ id }}" class="post-preview mt-5" method="post">
 					<div class="mb-3">
 						<label for="title" class="form-label">Titre</label>
 						<input type="text" class="form-control" id="title" name="title" value="{{ post.title }}">

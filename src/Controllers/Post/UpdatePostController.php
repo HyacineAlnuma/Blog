@@ -11,15 +11,13 @@ class UpdatePostController extends AbstractPostController
             if ($_POST['title'] !== '' && $_POST['chapo'] !== '' && $_POST['content'] !== '') {
                 $this->postRepository->updatePost($id, $_POST);
 
-                header("Location: index.php?action=post&id=$id");
+                header("Location: /post/$id");
             } else {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
         $post = $this->postRepository->getPost($id);
-        $this->twig->display('pages/updatePost/index.html.twig', [
-            'loggedIn' => $_SESSION['loggedIn'],
-            'userRole' => $_SESSION['userRole'],
+        $this->display('pages/updatePost/index.html.twig', [
             'id' => $id,
             'post' => $post,
             'errors' => $errors

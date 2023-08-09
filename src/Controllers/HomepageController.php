@@ -21,9 +21,7 @@ class HomepageController extends Controller
 
     public function execute()
     {
-        $this->twig->display('pages/homepage/index.html.twig', [
-            'loggedIn' => $_SESSION['loggedIn'],
-            'userRole' => $_SESSION['userRole'],
+        $this->display('pages/homepage/index.html.twig', [
             'emailStatus' => $this->emailStatus
         ]);
     }
@@ -56,7 +54,7 @@ class HomepageController extends Controller
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
             } else {
-                $this->emailStatus= 'inputError';
+                $emailStatus= 'inputError';
                 $this->execute();
             }
         }

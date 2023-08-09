@@ -53,7 +53,7 @@ class CommentRepository
     public function addComment($id, $inputs)
     {
         $approved = 0;
-        if ($_SESSION['userRole'] == 'admin') {
+        if ($_SESSION['user']->userRole == 'admin') {
             $approved = 1;
         }
         date_default_timezone_set('Europe/Paris');
@@ -61,7 +61,7 @@ class CommentRepository
         $statement = $this->connection->getConnection()->prepare(
             "INSERT INTO comments(author, content, lastUpdateDate, id_post, id_user, approved) VALUES (?, ?, ?, ?, ?, ?)"
         );
-        $statement->execute([$_SESSION['username'], $inputs['content'], $date, $id, $_SESSION['userId'], $approved]);
+        $statement->execute([$_SESSION['user']->username, $inputs['content'], $date, $id, $_SESSION['user']->id, $approved]);
     }
 
     public function approveComment($id)

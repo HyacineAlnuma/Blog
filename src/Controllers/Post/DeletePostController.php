@@ -8,6 +8,6 @@ class DeletePostController extends AbstractPostController
     {
         $this->postRepository->deletePost($id);
 
-        header("Location: index.php?action=posts");
+        header("Location: /posts");
     }
 }

@@ -23,32 +23,30 @@ class LoginController extends Controller
         $errors = [];
         if ($_POST) {
             if ($_POST['username'] !== '' && $_POST['password'] !== '') {
-                $user = $this->authRepository->login($_POST);
-                if (password_verify($_POST['password'], $user->passwordHash)) {
-                    $_SESSION['loggedIn'] = true;
-                    $_SESSION['userId'] = $user->id;
-                    $_SESSION['username'] = $user->username;
-                    $_SESSION['userRole'] = $user->userRole;
-                    header("Location: index.php");
+                $user = $this->authRepository->getUserByUsername($_POST);
+                if ($user == null) {
+                    $errors[] = "Le nom d'utilisateur est incorrect.";
                 } else {
-                    $errors[] = "Le nom d'utilisateur ou le mot de passe sont incorrects.";
+                    if (password_verify($_POST['password'], $user->passwordHash)) {
+                        $_SESSION['user'] = $user;
+                        header("Location: /");
+                    } else {
+                        $errors[] = "Le mot de passe est incorrect.";
+                    }
                 }
             } else {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
 
-        $this->twig->display('pages/auth/login.html.twig', [
+        $this->display('pages/auth/login.html.twig', [
             'errors' => $errors
         ]);
     }
 
     public function logout()
     {
-        $_SESSION['loggedIn'] = false;
-        $_SESSION['userId'] = '';
-        $_SESSION['username'] = '';
-        $_SESSION['userRole'] = '';
+        session_destroy();
         header("Location: index.php");
     }
 }

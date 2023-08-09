@@ -11,14 +11,12 @@ class AddPostController extends AbstractPostController
             if ($_POST['title'] !== '' && $_POST['chapo'] !== '' && $_POST['content'] !== '') {
                 $this->postRepository->addPost($_POST);
 
-                header("Location: index.php?action=posts");
+                header("Location: /posts");
             } else {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
             }
         }
-        $this->twig->display('pages/addPost/index.html.twig', [
-            'loggedIn' => $_SESSION['loggedIn'],
-            'userRole' => $_SESSION['userRole'],
+        $this->display('pages/addPost/index.html.twig', [
             'errors' => $errors
         ]);
     }

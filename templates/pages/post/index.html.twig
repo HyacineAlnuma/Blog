@@ -24,7 +24,7 @@
 	<article class="mb-4">
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
-				{% if commentSent == true and userRole == 'user'%}
+				{% if commentSent == true and user.userRole == 'user' %}
 					<div class="alert alert-success" role="alert">
 						<h4 class="alert-heading">Votre commentaire a bien été pris en compte !</h4>
 						<p>Votre commentaire doit tout d'abord être validé par un administrateur. Une fois cela fait, il sera visible par tout le monde !</p>
@@ -33,10 +33,10 @@
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<p>{{ post.content }}</p>
 				</div>
-				{% if userRole == 'admin' %}
+				{% if user.userRole == 'admin' %}
 					<div class="d-flex justify-content-around mb-4">
-						<a class="btn btn-primary text-uppercase" href="index.php?action=updatePost&amp;id={{ post.id }}">Modifier le post</a>
-						<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&amp;id={{ post.id }}">Supprimer le post</a>
+						<a class="btn btn-primary text-uppercase" href="/updatePost/{{ post.id }}">Modifier le post</a>
+						<a class="btn btn-primary text-uppercase" href="/deletePost/{{ post.id }}">Supprimer le post</a>
 					</div>
 				{% endif %}
 				<!-- Divider-->
@@ -53,7 +53,7 @@
 						</p>
 					</div>
 				{% endfor %}
-				{% if loggedIn == true %}
+				{% if user == true %}
 					<form action="" class="post-preview mt-5" method="post">
 						<div class="mb-3">
 							<label for="content" class="form-label">Ajouter un commentaire</label>

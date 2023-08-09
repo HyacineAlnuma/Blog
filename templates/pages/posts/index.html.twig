@@ -22,7 +22,7 @@
 				{% for post in posts %}
 					<!-- Post preview-->
 					<div class="post-preview">
-						<a href="index.php?action=post&amp;id={{ post.id }}">
+						<a href="/post/{{ post.id }}">
 							<h2 class="post-title">{{ post.title }}</h2>
 							<h3 class="post-subtitle">{{ post.chapo }}</h3>
 						</a>
@@ -37,9 +37,9 @@
 					<hr class="my-4"/>
 				{% endfor %}
 				<!-- Pager-->
-				{% if userRole == 'admin' %}
+				{% if user.userRole == 'admin' %}
 					<div class="d-flex justify-content-end mb-4">
-						<a class="btn btn-primary text-uppercase" href="index.php?action=addPost">Ajouter un post</a>
+						<a class="btn btn-primary text-uppercase" href="/addPost">Ajouter un post</a>
 					</div>
 				{% endif %}
 			</div>

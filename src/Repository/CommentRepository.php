@@ -21,10 +21,10 @@ class CommentRepository
         return $comment;
     }
 
-    public function getPostComments($id): array
+    public function getPostApprovedComments($id): array
     {
         $statement = $this->connection->getConnection()->prepare(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ?"
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE id_post = ? AND approved = 1"
         );
         $statement->execute([$id]);
         $comments = [];
@@ -35,10 +35,10 @@ class CommentRepository
         return $comments;
     }
 
-    public function getComments(): array
+    public function getNonApprovedComments(): array
     {
         $statement = $this->connection->getConnection()->query(
-            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments"
+            "SELECT id, author, content, approved, DATE_FORMAT(lastUpdateDate, '%d/%m/%Y à %Hh%imin%ss') AS lastUpdateDate FROM comments WHERE approved = 0"
         );
         $comments = [];
         while(($row = $statement->fetch())) {
@@ -58,14 +58,12 @@ class CommentRepository
         $statement->execute([$inputs['content'], $date, $id]);
     }
 
-    public function updateComment($id, $inputs)
+    public function approveComment($id)
     {
-        date_default_timezone_set('Europe/Paris');
-        $date = date('Y-m-d H:i:s', time());
         $statement = $this->connection->getConnection()->prepare(
-            "UPDATE comments SET content = ?, lastUpdateDate = ? WHERE id = ?"
+            "UPDATE comments SET approved = 1 WHERE id = ?"
         );
-        $statement->execute([$inputs['content'], $date, $id]);
+        $statement->execute([$id]);
     }
 
     public function deleteComment($id)

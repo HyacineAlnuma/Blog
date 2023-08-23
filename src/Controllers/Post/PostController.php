@@ -19,25 +19,22 @@ class PostController extends AbstractPostController
 
     public function execute(int $id)
     {
+        $commentSent = false;
         if ($_POST) {
             if ($_POST['content'] !== '') {
                 $this->commentRepository->addComment($id, $_POST);
+                $commentSent = true;
             } else {
                 throw new Exception("Le champ n'est' pas correctement rempli");
             }
         }
         $post = $this->postRepository->getPost($id);
-        $comments = $this->commentRepository->getPostComments($id);
-        $approvedComments = [];
-        for ($i = 0; $i < count($comments); $i++) {
-            if ($comments[$i]->approved === 1) {
-                $approvedComments = $comments[$i];
-            }
-        }
+        $comments = $this->commentRepository->getPostApprovedComments($id);
 
         $this->twig->display('pages/post/index.html.twig', [
             'post' => $post,
-            'comments' => $approvedComments
+            'comments' => $comments,
+            'commentSent' => $commentSent
         ]);
     }
 }

@@ -3,35 +3,38 @@
 
 {% block main %}
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url('img/home-bg.jpg')">
+	<header class="masthead" style="background-image: url('img/picture-bg.jpg')">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<div class="site-heading">
-						<h1>Accueil</h1>
-						<span class="subheading"></span>
+						<h1>Hyacine Alnuma</h1>
+						<span class="subheading">Le développeur qu'il vous faut !</span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!-- Main Content-->
-	<form action="index.php?action=contact" class="container px-4 px-lg-5 mb-5" method="post">
-		<div class="mb-3">
-			<label for="username" class="form-label">Nom prénom</label>
-			<input type="text" class="form-control" id="username">
-		</div>
-		<div class="mb-3">
-			<label for="email" class="form-label">Email</label>
-			<input type="email" class="form-control" id="email">
-		</div>
-		<div class="mb-3">
-			<label for="message" class="form-label">Message</label>
-			<textarea class="form-control" id="message" rows="3"></textarea>
-		</div>
-		<button type="submit" class="btn btn-primary">Envoyer</button>
-		{% if confirmation != '' %}
-			<p>{{confirmation}}</p>
-		{% endif %}
-	</form>
+	<div class="container mb-5">
+		<h2 class="post-title mb-5">Me contacter</h2>
+		<form action="index.php?action=contact" class="container px-4 px-lg-5 mb-5" method="post">
+			<div class="mb-3">
+				<label for="username" class="form-label">Nom prénom</label>
+				<input type="text" class="form-control" id="username" name="username">
+			</div>
+			<div class="mb-3">
+				<label for="email" class="form-label">Email</label>
+				<input type="email" class="form-control" id="email" name="email">
+			</div>
+			<div class="mb-3">
+				<label for="message" class="form-label">Message</label>
+				<textarea class="form-control" id="message" name="message" rows="3"></textarea>
+			</div>
+			<button type="submit" class="btn btn-primary">Envoyer</button>
+		</form>
+
+		<h2 class="post-title mb-5">Voir mon CV</h2>
+		<a href="pdf/CV.pdf">Télécharger le CV</a>
+	</div>
 {% endblock %}

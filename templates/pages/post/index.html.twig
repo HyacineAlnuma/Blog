@@ -24,6 +24,12 @@
 	<article class="mb-4">
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
+				{% if commentSent == true %}
+					<div class="alert alert-success" role="alert">
+						<h4 class="alert-heading">Votre commentaire a bien été pris en compte !</h4>
+						<p>Votre commentaire doit tout d'abord être validé par un administrateur. Une fois cela fait, il sera visible par tout le monde !</p>
+					</div>
+				{% endif %}
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<p>{{ post.content }}</p>
 				</div>

@@ -17,27 +17,35 @@
 	</header>
 	<!-- Main Content-->
 	<div class="container">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th scope="col">Utilisateur</th>
-					<th scope="col">Post</th>
-					<th scope="col">Commentaire</th>
-					<th scope="col">Date</th>
-					<th scope="col">Validation</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for comment in comments %}
+		<h2 class="post-title mb-5">Validation des commentaires</h2>
+		{% if comments|length == 0 %}
+			<h3 class="post-subtitle fw-lighter mb-5">Aucun commentaire en attente</h3>
+		{% else %}
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td>{{ comment.author}}</td>
-						<td>#</td>
-						<td>{{ comment.content }}</td>
-						<td>{{ comment.lastUpdateDate }}</td>
-						<td></td>
+						<th scope="col">Utilisateur</th>
+						<th scope="col">Post</th>
+						<th scope="col">Commentaire</th>
+						<th scope="col">Date</th>
+						<th scope="col">Validation</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for comment in comments %}
+						<tr class="align-middle">
+							<td>{{ comment.author}}</td>
+							<td>#</td>
+							<td>{{ comment.content }}</td>
+							<td>{{ comment.lastUpdateDate }}</td>
+							<td>
+								<a class="btn btn-outline-success" href="index.php?action=approveComment&amp;id={{ comment.id }}">Valider</a>
+								<a class="btn btn-outline-danger" href="index.php?action=deleteComment&amp;id={{ comment.id }}">Supprimer</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
 	</div>
 {% endblock %}

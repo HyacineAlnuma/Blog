@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Comment;
 
 use App\Entity\Database;
-use App\Controllers\Controller;
 use App\Repository\CommentRepository;
+use App\Controllers\Controller;
 
-class AdministrationController extends Controller
+class ApproveCommentController extends Controller
 {
     private CommentRepository $commentRepository;
 
@@ -18,12 +18,10 @@ class AdministrationController extends Controller
         $this->commentRepository->connection = $connection;
     }
 
-    public function execute()
+    public function execute(int $id)
     {
-        $comments = $this->commentRepository->getNonApprovedComments();
+        $this->commentRepository->approveComment($id);
 
-        $this->twig->display('pages/administration/index.html.twig', [
-            'comments' => $comments
-        ]);
+        header("Location: index.php?action=administration");
     }
 }

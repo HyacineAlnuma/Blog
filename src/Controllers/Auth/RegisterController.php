@@ -21,21 +21,19 @@ class RegisterController extends Controller
     public function execute()
     {
         $errors = [];
+        
         if ($_POST) {
-            if ($_POST['username'] !== '' && $_POST['email'] !== '' && $_POST['password'] !== '') {
-                $getByUsername = $this->authRepository->getUserByUsername($_POST);
-                $getByEmail = $this->authRepository->getUserByEmail($_POST);
-                if (isset($getByUsername) || isset($getByEmail)) {
-                    $errors[] = "Ce nom d'utilisateur ou cet email sont déjà utilisés.";
-                } else {
-                    $this->authRepository->register($_POST);
-
-                    header("Location: /login");
-                }
-            } else {
+            $getByUsername = $this->authRepository->getUserByUsername($_POST);
+            $getByEmail = $this->authRepository->getUserByEmail($_POST);
+            if ($_POST['username'] == '' || $_POST['email'] == '' || $_POST['password'] == '') {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
+            } elseif (isset($getByUsername) || isset($getByEmail)) {
+                $errors[] = "Ce nom d'utilisateur ou cet email sont déjà utilisés.";
+            } else {
+                $this->authRepository->register($_POST);
+                header("Location: /login");
             }
-        }
+        } 
 
         $this->display('pages/auth/register.html.twig', [
             'errors' => $errors

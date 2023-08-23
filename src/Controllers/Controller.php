@@ -10,4 +10,10 @@ abstract class Controller
     {
         $this->twig = $twig;
     }
+
+    protected function display(string $path, array $parameters)
+    {
+        $parameters['user'] = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $this->twig->display($path, $parameters);
+    }
 }

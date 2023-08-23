@@ -2,7 +2,7 @@
 
 {% block main %}
 	<!-- Page Header-->
-	<header class="masthead" style="background-image: url('img/home-bg.jpg')">
+	<header class="masthead" style="background-image: url('/img/home-bg.jpg')">
 		<div class="container position-relative px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
 				<div class="col-md-10 col-lg-8 col-xl-7">
@@ -24,7 +24,7 @@
 	<article class="mb-4">
 		<div class="container px-4 px-lg-5">
 			<div class="row gx-4 gx-lg-5 justify-content-center">
-				{% if commentSent == true %}
+				{% if commentStatus == 'sent' and user.userRole == 'user' %}
 					<div class="alert alert-success" role="alert">
 						<h4 class="alert-heading">Votre commentaire a bien été pris en compte !</h4>
 						<p>Votre commentaire doit tout d'abord être validé par un administrateur. Une fois cela fait, il sera visible par tout le monde !</p>
@@ -33,10 +33,12 @@
 				<div class="col-md-10 col-lg-8 col-xl-7">
 					<p>{{ post.content }}</p>
 				</div>
-				<div class="d-flex justify-content-around mb-4">
-					<a class="btn btn-primary text-uppercase" href="index.php?action=updatePost&amp;id={{ post.id }}">Modifier le post</a>
-					<a class="btn btn-primary text-uppercase" href="index.php?action=deletePost&amp;id={{ post.id }}">Supprimer le post</a>
-				</div>
+				{% if user.userRole == 'admin' %}
+					<div class="d-flex justify-content-around mb-4">
+						<a class="btn btn-primary text-uppercase" href="/updatePost/{{ post.id }}">Modifier le post</a>
+						<a class="btn btn-primary text-uppercase" href="/deletePost/{{ post.id }}">Supprimer le post</a>
+					</div>
+				{% endif %}
 				<!-- Divider-->
 				<hr class="my-4"/>
 				<h4>Commentaires</h4>
@@ -45,19 +47,26 @@
 						<p>{{ comment.content }}</p>
 						<p class="post-meta">
 							Posté par
-							<a href="index.php">{{ comment.author }}</a>
+							<a href="#">{{ comment.author }}</a>
 							le
 							{{ comment.lastUpdateDate }}
 						</p>
 					</div>
 				{% endfor %}
-				<form action="" class="post-preview mt-5" method="post">
-					<div class="mb-3">
-						<label for="content" class="form-label">Ajouter un commentaire</label>
-						<input type="text" class="form-control" id="content" name="content">
-					</div>
-					<input type="submit" class="btn btn-primary">
-				</form>
+				{% if user == true %}
+					<form action="" class="post-preview mt-5" method="post">
+						<div class="mb-3">
+							<label for="content" class="form-label">Ajouter un commentaire</label>
+							<input type="text" class="form-control" id="content" name="content">
+						</div>
+						{% if commentStatus == 'empty' %}
+						<div class="alert alert-danger" role="alert">
+							Veuillez remplir le champ avant d'envoyer le commentaire.
+						</div>
+						{% endif %}
+						<input type="submit" class="btn btn-primary">
+					</form>
+				{% endif %}
 			</div>
 		</div>
 	</article>

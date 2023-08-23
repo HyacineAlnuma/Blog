@@ -1,7 +1,8 @@
 <?php
 
-
 require __DIR__ . '/../vendor/autoload.php';
+
+session_start();
 
 use App\Controllers\HomepageController;
 use App\Controllers\AdministrationController;
@@ -15,11 +16,15 @@ use App\Controllers\Post\DeletePostController;
 use App\Controllers\Comment\ApproveCommentController;
 use App\Controllers\Comment\DeleteCommentController;
 
-use App\Controllers\Auth\SigninController;
+use App\Controllers\Auth\RegisterController;
+use App\Controllers\Auth\LoginController;
 
 use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
 
 $loader = new FilesystemLoader(__DIR__.'/../templates');
 $twig = new Environment($loader, [
@@ -29,112 +34,69 @@ $twig = new Environment($loader, [
 
 $twig->addExtension(new \Twig\Extension\DebugExtension());
 
-try {
-    if (!isset($_GET['action']) || ($_GET['action'] == '')) {
-        (new HomepageController($twig))->execute();
-        exit;
-    }
+$uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
-    if (($_GET['action']) === 'post' && isset($_GET['id']) && $_GET['id'] > 0) {
-        $id = $_GET['id'];
-        $postController = new PostController($twig);
-        $postController->execute($id);
-    }
+// ROUTES 
 
-    if (($_GET['action']) === 'posts') {
-        $postsController = new PostsController($twig);
-        $postsController->execute();
-    }
+if ($uriSegments[1] == null) {
+    (new HomepageController($twig))->execute();
+} 
 
-    if (($_GET['action']) === 'addPost') {
-        (new AddPostController($twig))->execute();
-    }
+elseif ($uriSegments[1] == 'post') {
+    $id = intval($uriSegments[2]);
+    $postController = new PostController($twig);
+    $postController->execute($id);
+} 
 
-    if (($_GET['action']) === 'updatePost' && isset($_GET['id']) && $_GET['id'] > 0) {
-        $id = $_GET['id'];
-        (new UpdatePostController($twig))->execute($id);
-    }
+elseif ($uriSegments[1] == 'posts') {
+    $postsController = new PostsController($twig);
+    $postsController->execute();
+} 
 
-    if (($_GET['action']) === 'deletePost' && isset($_GET['id']) && $_GET['id'] > 0) {
-        $id = $_GET['id'];
-        (new DeletePostController($twig))->execute($id);
-    }
+elseif ($uriSegments[1] == 'addPost') {
+    (new AddPostController($twig))->execute();
+} 
 
-    if (($_GET['action']) === 'contact') {
-        (new HomepageController($twig))->sendEmail($_POST);
-    }
+elseif ($uriSegments[1] == 'updatePost') {
+    $id = intval($uriSegments[2]);
+    (new UpdatePostController($twig))->execute($id);
+} 
 
-    if (($_GET['action']) === 'signin') {
-        (new SigninController($twig))->execute();
-    }
+elseif ($uriSegments[1] == 'deletePost') {
+    $id = intval($uriSegments[2]);
+    (new DeletePostController($twig))->execute($id);
+} 
 
-    if (($_GET['action']) === 'administration') {
-        (new AdministrationController($twig))->execute();
-    }
+elseif ($uriSegments[1] == 'contact') {
+    (new HomepageController($twig))->sendEmail();
+} 
 
-    if (($_GET['action']) === 'approveComment' && isset($_GET['id']) && $_GET['id'] > 0) {
-        $id = $_GET['id'];
-        (new ApproveCommentController($twig))->execute($id);
-    }
+elseif ($uriSegments[1] == 'register') {
+    (new RegisterController($twig))->execute();
+} 
 
-    if (($_GET['action']) === 'deleteComment' && isset($_GET['id']) && $_GET['id'] > 0) {
-        $id = $_GET['id'];
-        (new DeleteCommentController($twig))->execute($id);
-    }
+elseif ($uriSegments[1] == 'login') {
+    (new LoginController($twig))->login();
+} 
 
+elseif ($uriSegments[1] == 'logout') {
+    (new LoginController($twig))->logout();
+} 
 
-    // if (isset($_GET['action']) && ($_GET['action'] !== '')) {
-    //     if (($_GET['action']) === 'post') {
-    //         if(isset($_GET['id']) && $_GET['id'] > 0) {
-    //             $id = $_GET['id'];
-    //             $postController = new PostController($twig);
-    //             $postController->execute($id);
-    //         } else {
-    //             throw new Exception('Aucun identifiant de post envoyé');
-    //         }
-    //     } elseif (($_GET['action']) === 'posts') {
-    //         $postsController = new PostsController($twig);
-    //         $postsController->execute();
-    //     } elseif (($_GET['action']) === 'addPost') {
-    //         (new AddPostController($twig))->execute();
-    //     } elseif (($_GET['action']) === 'updatePost') {
-    //         if(isset($_GET['id']) && $_GET['id'] > 0) {
-    //             $id = $_GET['id'];
-    //             (new UpdatePostController($twig))->execute($id);
-    //         } else {
-    //             throw new Exception('Aucun identifiant de post envoyé');
-    //         }
-    //     } elseif (($_GET['action']) === 'deletePost') {
-    //         if(isset($_GET['id']) && $_GET['id'] > 0) {
-    //             $id = $_GET['id'];
-    //             (new DeletePostController($twig))->execute($id);
-    //         } else {
-    //             throw new Exception('Aucun identifiant de post envoyé');
-    //         }
-    //     } elseif (($_GET['action']) === 'contact') {
-    //         if (!$_POST) {
-    //             // header("Location: index.php");
-    //         } else {
-    //             (new HomepageController($twig))->sendEmail($_POST);
-    //         }
-    //     } elseif (($_GET['action']) === 'signin') {
-    //         (new SigninController($twig))->execute();
-    //     } elseif (($_GET['action']) === 'administration') {
-    //         (new AdministrationController($twig))->execute();
-    //     } elseif (($_GET['action']) === 'approveComment') {
-    //         if(isset($_GET['id']) && $_GET['id'] > 0) {
-    //             $id = $_GET['id'];
-    //             (new ApproveCommentController($twig))->execute($id);
-    //         }
-    //     } elseif (($_GET['action']) === 'deleteComment') {
-    //         if(isset($_GET['id']) && $_GET['id'] > 0) {
-    //             $id = $_GET['id'];
-    //             (new DeleteCommentController($twig))->execute($id);
-    //         }
-    //     }
-    // } else {
-    //     (new HomepageController($twig))->execute();
-    // }
-} catch (Exception $e) {
-    $errorMessage = $e->getMessage();
+elseif ($uriSegments[1] == 'administration') {
+    (new AdministrationController($twig))->execute();
+} 
+
+elseif ($uriSegments[1] == 'approveComment') {
+    $id = intval($uriSegments[2]);
+    (new ApproveCommentController($twig))->execute($id);
+} 
+
+elseif ($uriSegments[1] == 'deleteComment') {
+    $id = intval($uriSegments[2]);
+    (new DeleteCommentController($twig))->execute($id);
+} 
+
+else {
+    $twig->display('pages/error/index.html.twig');
 }

@@ -7103,6 +7103,7 @@ textarea.form-control-lg {
 
 .justify-content-around {
   justify-content: space-around !important;
+  gap: 20px;
 }
 
 .justify-content-evenly {
@@ -10729,9 +10730,14 @@ header.masthead .post-heading .meta a {
   color: #fff;
 }
 @media (min-width: 992px) {
+  header.masthead-main {
+    padding-top: 26rem !important;
+    padding-bottom: 26rem !important;
+  }
+
   header.masthead {
-    padding-top: 25rem;
-    padding-bottom: 25rem;
+    padding-top: 12.5rem;
+    padding-bottom: 12.5rem;
   }
   
   header.masthead .page-heading h1, header.masthead .page-heading .h1,

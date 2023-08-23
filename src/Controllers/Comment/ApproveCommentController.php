@@ -22,6 +22,6 @@ class ApproveCommentController extends Controller
     {
         $this->commentRepository->approveComment($id);
 
-        header("Location: index.php?action=administration");
+        header("Location: /administration");
     }
 }

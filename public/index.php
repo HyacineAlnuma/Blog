@@ -23,6 +23,9 @@ use App\Entity\Post;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->safeLoad();
+
 $loader = new FilesystemLoader(__DIR__.'/../templates');
 $twig = new Environment($loader, [
         'cache' => false,
@@ -34,6 +37,7 @@ $twig->addExtension(new \Twig\Extension\DebugExtension());
 $uriSegments = explode("/", parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 // ROUTES 
+
 if ($uriSegments[1] == null) {
     (new HomepageController($twig))->execute();
 } 

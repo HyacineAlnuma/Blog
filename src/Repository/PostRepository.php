@@ -12,12 +12,12 @@ class PostRepository
     private function hydratePost(array $row): Post
     {
         $post = new Post();
-        $post->id = $row['id'];
-        $post->title = $row['title'];
-        $post->author = $row['author'];
-        $post->chapo = $row['chapo'];
-        $post->content = $row['content'];
-        $post->lastUpdateDate = $row['lastUpdateDate'];
+        $post->setId($row['id']);
+        $post->setTitle($row['title']);
+        $post->setAuthor($row['author']);
+        $post->setChapo($row['chapo']);
+        $post->setContent($row['content']);
+        $post->setLastUpdateDate($row['lastUpdateDate']);
 
         return $post;
     }

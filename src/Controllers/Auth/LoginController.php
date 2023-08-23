@@ -8,7 +8,7 @@ use App\Controllers\Controller;
 
 class LoginController extends Controller
 {
-    private PostRepository $postRepository;
+    private AuthRepository $authRepository;
 
     public function __construct($twig)
     {
@@ -27,7 +27,7 @@ class LoginController extends Controller
                 if ($user == null) {
                     $errors[] = "Le nom d'utilisateur est incorrect.";
                 } else {
-                    if (password_verify($_POST['password'], $user->passwordHash)) {
+                    if (password_verify($_POST['password'], $user->getPasswordHash())) {
                         $_SESSION['user'] = $user;
                         header("Location: /");
                     } else {
@@ -47,6 +47,6 @@ class LoginController extends Controller
     public function logout()
     {
         session_destroy();
-        header("Location: index.php");
+        header("Location: /");
     }
 }

@@ -12,12 +12,12 @@ class CommentRepository
     private function hydrateComment(array $row): Comment
     {
         $comment = new Comment();
-        $comment->id = $row['id'];
-        $comment->author = $row['author'];
-        $comment->content = $row['content'];
-        $comment->lastUpdateDate = $row['lastUpdateDate'];
-        $comment->id_post = $row['id_post'];
-        $comment->approved = $row['approved'];
+        $comment->setId($row['id']);
+        $comment->setAuthor($row['author']);
+        $comment->setContent($row['content']);
+        $comment->setLastUpdateDate($row['lastUpdateDate']);
+        $comment->setIdPost($row['id_post']);
+        $comment->setApproved($row['approved']);
 
         return $comment;
     }
@@ -53,7 +53,7 @@ class CommentRepository
     public function addComment($id, $inputs)
     {
         $approved = 0;
-        if ($_SESSION['user']->userRole == 'admin') {
+        if ($_SESSION['user']->getUserRole() == 'admin') {
             $approved = 1;
         }
         date_default_timezone_set('Europe/Paris');
@@ -61,7 +61,7 @@ class CommentRepository
         $statement = $this->connection->getConnection()->prepare(
             "INSERT INTO comments(author, content, lastUpdateDate, id_post, id_user, approved) VALUES (?, ?, ?, ?, ?, ?)"
         );
-        $statement->execute([$_SESSION['user']->username, $inputs['content'], $date, $id, $_SESSION['user']->id, $approved]);
+        $statement->execute([$_SESSION['user']->getUsername(), $inputs['content'], $date, $id, $_SESSION['user']->getId(), $approved]);
     }
 
     public function approveComment($id)

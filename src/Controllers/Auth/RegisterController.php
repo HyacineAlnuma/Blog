@@ -8,7 +8,7 @@ use App\Controllers\Controller;
 
 class RegisterController extends Controller
 {
-    private PostRepository $postRepository;
+    private AuthRepository $authRepository;
 
     public function __construct($twig)
     {

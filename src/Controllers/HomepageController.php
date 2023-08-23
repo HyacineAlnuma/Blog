@@ -11,7 +11,6 @@ use PHPMailer\PHPMailer\Exception;
 
 class HomepageController extends Controller
 {
-    private PostRepository $postRepository;
     private string $emailStatus = '';
 
     public function __construct($twig)
@@ -54,7 +53,7 @@ class HomepageController extends Controller
                     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                 }
             } else {
-                $emailStatus= 'inputError';
+                $this->emailStatus = 'inputError';
                 $this->execute();
             }
         }

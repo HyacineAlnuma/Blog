@@ -12,10 +12,10 @@ class AuthRepository
     private function hydrateUser(array $row): User
     {
         $user = new User();
-        $user->id = $row['id'];
-        $user->username = $row['username'];
-        $user->passwordHash = $row['passwordHash'];
-        $user->userRole = $row['userRole'];
+        $user->setId($row['id']);
+        $user->setUsername($row['username']);
+        $user->setPasswordHash($row['passwordHash']);
+        $user->setUserRole($row['userRole']);
 
         return $user;
     }

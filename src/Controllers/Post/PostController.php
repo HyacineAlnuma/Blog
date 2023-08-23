@@ -19,13 +19,13 @@ class PostController extends AbstractPostController
 
     public function execute(int $id)
     {
-        $commentSent = false;
+        $commentStatus = '';
         if ($_POST) {
             if ($_POST['content'] !== '') {
                 $this->commentRepository->addComment($id, $_POST);
-                $commentSent = true;
+                $commentStatus = 'sent';
             } else {
-                throw new Exception("Le champ n'est' pas correctement rempli");
+                $commentStatus = 'empty';
             }
         }
         $post = $this->postRepository->getPost($id);
@@ -34,7 +34,7 @@ class PostController extends AbstractPostController
         $this->display('pages/post/index.html.twig', [
             'post' => $post,
             'comments' => $comments,
-            'commentSent' => $commentSent
+            'commentStatus' => $commentStatus
         ]);
 
 

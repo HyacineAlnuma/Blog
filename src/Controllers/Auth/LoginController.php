@@ -22,22 +22,18 @@ class LoginController extends Controller
     {
         $errors = [];
         if ($_POST) {
-            if ($_POST['username'] !== '' && $_POST['password'] !== '') {
-                $user = $this->authRepository->getUserByUsername($_POST);
-                if ($user == null) {
-                    $errors[] = "Le nom d'utilisateur est incorrect.";
-                } else {
-                    if (password_verify($_POST['password'], $user->getPasswordHash())) {
-                        $_SESSION['user'] = $user;
-                        header("Location: /");
-                    } else {
-                        $errors[] = "Le mot de passe est incorrect.";
-                    }
-                }
-            } else {
+            $user = $this->authRepository->getUserByUsername($_POST);
+            if ($_POST['username'] == '' || $_POST['password'] == '') {
                 $errors[] = 'Les champs ne sont pas correctement remplis.';
+            } elseif ($user == null) {
+                $errors[] = "Le nom d'utilisateur est incorrect.";
+            } elseif (!password_verify($_POST['password'], $user->getPasswordHash())) {
+                $errors[] = "Le mot de passe est incorrect.";
+            } else {
+                $_SESSION['user'] = $user;
+                header("Location: /");
             }
-        }
+        } 
 
         $this->display('pages/auth/login.html.twig', [
             'errors' => $errors

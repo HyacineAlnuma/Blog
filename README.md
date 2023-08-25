@@ -17,14 +17,14 @@ Import the monblog.sql dumb in a local database so the app runs correctly.
 
 For the routing system to work properly, setup a virtual host that has the following configuration :
 
-<!--DocumentRoot "[Insert here the path of the public directory]"
+    DocumentRoot "[Insert here the path of the public directory]"
     ServerName monblog.ha
     DirectoryIndex index.php
     <Directory "[Insert here the path of the public directory]">
         AllowOverride All
         Order Allow,Deny
         Allow from All
-    </Directory> -->
+    </Directory> 
 
 From here you can visit the site on "monblog.ha".
 

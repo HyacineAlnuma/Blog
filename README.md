@@ -26,5 +26,5 @@ For the routing system to work properly, setup a virtual host that has the follo
         Allow from All
     </Directory> -->
 
-From here you can vist the site on "monblog.ha".
+From here you can visit the site on "monblog.ha".
 

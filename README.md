@@ -11,7 +11,7 @@ Create a .env file in the public directory in order to create the following envi
 
 ### Database 
 
-Import the monblog.sql dumb in a local database so the app runs correctly.
+Import the monblog.sql dump in a local database so the app runs correctly.
 
 ### Virtual Host
 

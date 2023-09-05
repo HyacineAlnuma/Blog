@@ -20,9 +20,14 @@ class AdministrationController extends Controller
 
     public function execute()
     {
-        $comments = $this->commentRepository->getNonApprovedComments();
-        $this->display('pages/administration/index.html.twig', [
-            'comments' => $comments
-        ]);
+        if ($_SESSION['user'] == null || $_SESSION['user']->getUserRole() == 'user') {
+            header("Location: /");
+        } else {
+            $comments = $this->commentRepository->getNonApprovedComments();
+            $this->display('pages/administration/index.html.twig', [
+                'comments' => $comments
+            ]);
+        }
     }
 }
+

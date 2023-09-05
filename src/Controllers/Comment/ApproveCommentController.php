@@ -10,8 +10,12 @@ class ApproveCommentController extends AbstractCommentController
 {
     public function execute(int $id)
     {
-        $this->commentRepository->approveComment($id);
+        if ($_SESSION['user'] == null || $_SESSION['user']->getUserRole() == 'user') {
+            header("Location: /");
+        } else {
+            $this->commentRepository->approveComment($id);
 
-        header("Location: /administration");
+            header("Location: /administration");
+        }
     }
 }

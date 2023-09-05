@@ -6,8 +6,12 @@ class DeletePostController extends AbstractPostController
 {
     public function execute(int $id)
     {
-        $this->postRepository->deletePost($id);
+        if ($_SESSION['user'] == null || $_SESSION['user']->getUserRole() == 'user') {
+            header("Location: /posts");
+        } else {
+            $this->postRepository->deletePost($id);
 
-        header("Location: /posts");
+            header("Location: /posts");
+        }
     }
 }

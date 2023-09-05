@@ -20,7 +20,7 @@ class PostController extends AbstractPostController
     public function execute(int $id)
     {
         $commentStatus = '';
-        if ($_POST) {
+        if ($_POST && $_SESSION['user'] !== null) {
             if ($_POST['content'] !== '') {
                 $this->commentRepository->addComment($id, $_POST);
                 $commentStatus = 'sent';

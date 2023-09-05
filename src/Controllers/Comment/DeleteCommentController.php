@@ -10,8 +10,12 @@ class DeleteCommentController extends AbstractCommentController
 {
     public function execute(int $id)
     {
-        $this->commentRepository->deleteComment($id);
+        if ($_SESSION['user'] == null || $_SESSION['user']->getUserRole() == 'user') {
+            header("Location: /");
+        } else {
+            $this->commentRepository->deleteComment($id);
 
-        header("Location: /administration");
+            header("Location: /administration");
+        }
     }
 }

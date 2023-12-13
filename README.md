@@ -1,5 +1,11 @@
 # Projet Mon Blog
 
+## CONTEXT
+
+This is my first project using PHP.
+This project is about building a personnal blog where users are able to create an account, login and comment posts. The app implements an administration interface where the admin is able to validate/delete users comments before they are published. Users are also able to contact the admin via a contact form, the message and infomrations are sent by email to the admin.
+I built this entire app using PHP aswell as Twig for the template rendering. I also used a bootstrap template for the design.
+
 ## INSTALLATION
 
 To install the dependencies of the project run the following command : `composer install`.
